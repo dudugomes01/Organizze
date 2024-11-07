@@ -1,5 +1,5 @@
-const transaction = () =>{
+const transactionPage = () =>{
     return( <h1>Teste Transaction</h1> )
 }
 
-export default transaction;
+export default transactionPage;
