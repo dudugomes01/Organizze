@@ -15,7 +15,7 @@ const loginPage = async () => {
       {/* Esquerda */}
       <div className="flex h-full flex-col justify-center mx-auto max-w-[550px] p-8">
         <Image
-          src={"/logo.png"}
+          src={"/logo.svg"}
           width={173}
           height={39}
           className="mb-8"
@@ -23,7 +23,7 @@ const loginPage = async () => {
         />
         <h1 className="text-4x1 font-bold mb-8">Bem vindo</h1>
         <p className="text-muted-foreground mb-8">
-          A Finance AI é uma plataforma de gestão financeira que utiliza IA para
+          A Organizze-AI é uma plataforma de gestão financeira que utiliza IA para
           monitorar suas movimentações, e oferecer insights personalizados,
           facilitando o controle do seu orçamento.
         </p>
