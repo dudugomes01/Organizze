@@ -15,8 +15,7 @@ const TransactionsPage = async () => {
     where: {
       userId,
     },
-  });
-  return (
+  });  return (
     <>
       <NavBar/>
       <div className="space-y-6 p-6">
