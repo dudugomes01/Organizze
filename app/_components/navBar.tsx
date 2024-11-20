@@ -6,6 +6,7 @@ import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { CreditCard, WalletCards, ChartBar } from "lucide-react";
+import AiReportButton from "../(home)/_components/ai-report-button";
 
 const NavBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -122,6 +123,7 @@ const NavBar = () => {
                     </Link>
                   </li>
                 ))}
+                  <AiReportButton hasPremiumPlan={false} month={""}/>
               </ul>
             </nav>
           </div>
