@@ -13,6 +13,7 @@ import { TransactionType } from "@prisma/client";
 import { TransactionPercentagePerType } from "@/app/_data/get-dashboard/types";
 import { PiggyBankIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import PercentageItem from "./percentage-item";
+import { ScrollArea } from "@/app/_components/ui/scroll-area";
 
 const chartConfig = {
   [TransactionType.INVESTMENT]: {
@@ -60,13 +61,14 @@ const TransactionsPieChart = ({
     },
   ];
   return (
-    <Card className="flex flex-col p-6">
+    <ScrollArea className="rounded-md border">
+    <Card className="flex flex-col p-4">
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px]"
         >
-          <PieChart width={250} height={250}>
+          <PieChart>
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
@@ -99,6 +101,7 @@ const TransactionsPieChart = ({
         </div>
       </CardContent>
     </Card>
+    </ScrollArea>
   );
 };
 
