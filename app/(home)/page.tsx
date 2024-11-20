@@ -32,7 +32,7 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
   return (
     <>
       <Navbar />
-      <div className="flex h-full flex-col space-y-6 overflow-hidden p-6">
+      <div className="flex flex-col space-y-6 p-6 overflow-auto">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <div className="flex items-center gap-3">
@@ -47,18 +47,24 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
             <TimeSelect />
           </div>
         </div>
-        <div className="grid h-full grid-cols-[2fr,1fr] gap-6 overflow-hidden">
-          <div className="flex flex-col gap-6 overflow-hidden">
+
+        {/* Tornar a grid responsiva */}
+        <div className="grid grid-cols-1 sm:grid-cols-[2fr,1fr] gap-0 sm:gap-6">
+          <div className="flex flex-col gap-6 mb-4 sm:mb-0">
             <SummaryCards
               month={month}
               {...dashboard}
               userCanAddTransaction={userCanAddTransaction}
             />
-            <div className="grid h-full grid-cols-3 grid-rows-1 gap-6 overflow-hidden">
-              <TransactionsPieChart {...dashboard} />
-              <ExpensesPerCategory
-                expensesPerCategory={dashboard.totalExpensePerCategory}
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 sm:gap-6">
+              <div className="mb-4 sm:mb-0">
+                <TransactionsPieChart {...dashboard} />
+              </div>
+              <div className="mb-4 sm:mb-0">
+                <ExpensesPerCategory
+                  expensesPerCategory={dashboard.totalExpensePerCategory}
+                />
+              </div>
             </div>
           </div>
           <LastTransactions lastTransactions={dashboard.lastTransactions} />

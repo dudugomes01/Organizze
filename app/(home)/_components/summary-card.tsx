@@ -8,6 +8,7 @@ interface SummaryCardProps {
   amount: number;
   size?: "small" | "large";
   userCanAddTransaction?: boolean;
+  className?: string;
 }
 
 const SummaryCard = ({
@@ -22,12 +23,14 @@ const SummaryCard = ({
       <CardHeader className="flex-row items-center gap-4">
         {icon}
         <p
-          className={`${size === "small" ? "text-muted-foreground" : "text-white opacity-70"}`}
+          className={`${
+            size === "small" ? "text-muted-foreground" : "text-white opacity-70"
+          }`}
         >
           {title}
         </p>
       </CardHeader>
-      <CardContent className="flex justify-between">
+      <CardContent className="flex flex-col sm:flex-row justify-between sm:items-center">
         <p
           className={`font-bold ${size === "small" ? "text-2xl" : "text-4xl"}`}
         >
@@ -38,7 +41,11 @@ const SummaryCard = ({
         </p>
 
         {size === "large" && (
-          <AddTransactionButton userCanAddTransaction={userCanAddTransaction} />
+          <div className="mt-4 sm:mt-0 sm:ml-4 w-full sm:w-auto flex justify-center">
+            <AddTransactionButton
+              userCanAddTransaction={userCanAddTransaction}
+            />
+          </div>
         )}
       </CardContent>
     </Card>
