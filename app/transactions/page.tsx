@@ -24,21 +24,27 @@ const TransactionsPage = async () => {
   const userCanAddTransaction = await canUserAddTransaction();
   return (
     <>
-      <Navbar />
-      <div className="flex flex-col space-y-6 overflow-hidden p-6">
-        {/* TÍTULO E BOTÃO */}
-        <div className="flex w-full items-center justify-between">
-          <h1 className="text-2xl font-bold">Transações</h1>
-          <AddTransactionButton userCanAddTransaction={userCanAddTransaction} />
-        </div>
-        <ScrollArea className="h-full">
-          <DataTable
-            columns={transactionColumns}
-            data={JSON.parse(JSON.stringify(transactions))}
+    <Navbar />
+    <div className="flex flex-col space-y-6 p-6 overflow-hidden">
+      {/* TÍTULO E BOTÃO */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h1 className="text-2xl font-bold">Transações</h1>
+        <div className="flex justify-center sm:justify-end">
+          <AddTransactionButton
+            userCanAddTransaction={userCanAddTransaction}
           />
-        </ScrollArea>
+        </div>
       </div>
-    </>
+  
+      {/* TABELA COM SCROLL HORIZONTAL */}
+      <ScrollArea className="h-full overflow-x-auto">
+        <DataTable
+          columns={transactionColumns}
+          data={JSON.parse(JSON.stringify(transactions))}
+        />
+      </ScrollArea>
+    </div>
+  </>
   );
 };
 
