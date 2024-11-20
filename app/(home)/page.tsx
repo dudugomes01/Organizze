@@ -56,7 +56,7 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
               {...dashboard}
               userCanAddTransaction={userCanAddTransaction}
             />
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-6">
               <div className="mb-4 sm:mb-0">
                 <TransactionsPieChart {...dashboard} />
               </div>
