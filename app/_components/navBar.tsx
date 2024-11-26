@@ -21,7 +21,7 @@ const NavBar = () => {
   return (
     <>
       {/* NavBar principal */}
-      <nav className="flex justify-between border-b border-solid px-8 py-4 lg:flex">
+      <nav className="flex justify-between border-b border-solid px-8 py-4">
         {/* ESQUERDA */}
         <div className="flex items-center gap-10">
           <Image src="/logo.svg" width={173} height={39} alt="Finance AI" />
@@ -69,21 +69,28 @@ const NavBar = () => {
             </svg>
           </button>
 
-          {/* UserButton - Sempre visível */}
-          <UserButton showName />
+          {/* UserButton - Nome escondido no mobile */}
+          <div className="flex items-center">
+            <UserButton
+              showName={false} // Esconde o nome do usuário
+              afterSignOutUrl="/"
+            />
+            {/* Mostra o nome apenas no desktop */}
+            <span className="hidden lg:inline-block ml-2 font-medium">
+              Eduardo Gomes
+            </span>
+          </div>
         </div>
       </nav>
 
       {/* Sidebar - Somente no Mobile */}
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 flex justify-end lg:hidden">
-          {/* Sidebar com transição suave */}
           <div
-            className={`h-full w-64 bg-secondary bg-opacity-90 shadow-lg relative transform transition-all duration-30000 ease-in-out ${
+            className={`h-full w-64 bg-secondary bg-opacity-90 shadow-lg relative transform transition-all duration-300 ease-in-out ${
               isSidebarOpen ? "translate-x-0" : "translate-x-full"
             }`}
           >
-            {/* Botão de fechar */}
             <button
               className="absolute top-4 right-4 p-2 z-50 text-black"
               aria-label="Close menu"
@@ -105,9 +112,7 @@ const NavBar = () => {
               </svg>
             </button>
 
-            {/* Menu */}
             <nav className="p-6 pt-16">
-              {/* Ajustado padding-top para descer os links */}
               <ul className="space-y-4">
                 {menuItems.map((item) => (
                   <li key={item.title}>
@@ -116,14 +121,12 @@ const NavBar = () => {
                       className="flex items-center gap-4 text-lg font-medium text-black hover:text-gray-700"
                       onClick={() => setIsSidebarOpen(false)}
                     >
-                      {/* Ícone */}
                       {<item.icon className="w-5 h-5" />}
-                      {/* Título */}
                       {item.title}
                     </Link>
                   </li>
                 ))}
-                  <AiReportButton hasPremiumPlan={false} month={""}/>
+                <AiReportButton hasPremiumPlan={false} month={""} />
               </ul>
             </nav>
           </div>
