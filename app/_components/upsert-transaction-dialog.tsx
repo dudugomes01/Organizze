@@ -117,7 +117,17 @@ const UpsertTransactionDialog = ({
       }}
     >
       <DialogTrigger asChild></DialogTrigger>
-      <DialogContent>
+      <DialogContent
+        style={{
+          height: "80%",
+          overflow: "scroll",
+          width: "90%",
+          backgroundColor: "#30005d",
+          pointerEvents: "auto",
+          boxShadow: "4px 4px 10px #b8b8b852",
+          borderRadius: "15px",
+        }}
+      >
         <DialogHeader>
           <DialogTitle>
             {isUpdate ? "Atualizar" : "Criar"} transação
