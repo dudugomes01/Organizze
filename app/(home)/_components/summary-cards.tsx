@@ -1,6 +1,6 @@
 'use client'; 
 
-import React, { useEffect, useState } from 'react';
+import React, {  } from 'react';
 import {
   PiggyBankIcon,
   TrendingDownIcon,
@@ -26,21 +26,21 @@ const SummaryCards = ({
   investmentsTotal,
   userCanAddTransaction,
 }: SummaryCardsProps) => {
-  const [storedBalance, setStoredBalance] = useState<number>(0);
+  // const [storedBalance, setStoredBalance] = useState<number>(0);
 
-  useEffect(() => {
-    const savedBalance = localStorage.getItem('balance');
-    if (savedBalance) {
-      setStoredBalance(Number(savedBalance));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedBalance = localStorage.getItem('balance');
+  //   if (savedBalance) {
+  //     setStoredBalance(Number(savedBalance));
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (balance > 0) {
-      localStorage.setItem('balance', String(balance));
-      setStoredBalance(balance);
-    }
-  }, [balance]);
+  // useEffect(() => {
+  //   if (balance > 0) {
+  //     localStorage.setItem('balance', String(balance));
+  //     setStoredBalance(balance);
+  //   }
+  // }, [balance]);
 
   return (
     <div className="space-y-6">
@@ -48,7 +48,7 @@ const SummaryCards = ({
       <SummaryCard
         icon={<WalletIcon size={16} />}
         title="Saldo"
-        amount={storedBalance}
+        amount={balance}
         size="large"
         userCanAddTransaction={userCanAddTransaction}
       />
