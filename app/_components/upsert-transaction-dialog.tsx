@@ -122,7 +122,7 @@ const UpsertTransactionDialog = ({
           height: "80%",
           overflow: "scroll",
           width: "90%",
-          backgroundColor: "#30005d",
+          backgroundColor: "#6c00d1",
           pointerEvents: "auto",
           boxShadow: "4px 4px 10px #b8b8b852",
           borderRadius: "15px",
