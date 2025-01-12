@@ -11,6 +11,7 @@ import SummaryCard from './summary-card';
 
 interface SummaryCardsProps {
   month: string;
+  year: string;
   balance: number;
   depositsTotal: number;
   investmentsTotal: number;

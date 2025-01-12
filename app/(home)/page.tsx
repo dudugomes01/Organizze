@@ -14,19 +14,26 @@ import AiReportButton from "./_components/ai-report-button";
 interface HomeProps {
   searchParams: {
     month: string;
+    year: string;
   };
 }
 
-const Home = async ({ searchParams: { month } }: HomeProps) => {
+const Home = async ({ searchParams }: HomeProps) => {
   const { userId } = await auth();
   if (!userId) {
     redirect("/login");
   }
+  const { month, year } = searchParams;
+  const currentYear = new Date().getFullYear().toString();
+  const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
+
   const monthIsInvalid = !month || !isMatch(month, "MM");
-  if (monthIsInvalid) {
-    redirect(`?month=${new Date().getMonth() + 1}`);
+  const yearIsInvalid = !year || !isMatch(year, "yyyy");
+
+  if (monthIsInvalid || yearIsInvalid) {
+    redirect(`?month=${currentMonth}&year=${currentYear}`);
   }
-  const dashboard = await getDashboard(month);
+  const dashboard = await getDashboard(month, year);
   const userCanAddTransaction = await canUserAddTransaction();
   const user = await clerkClient().users.getUser(userId);
   return (
@@ -52,8 +59,9 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
         <div className="grid grid-cols-1 sm:grid-cols-[2fr,1fr] gap-0 sm:gap-6">
           <div className="flex flex-col gap-6 mb-4 sm:mb-0">
             <SummaryCards
-              month={month}
-              {...dashboard}
+             month={month}
+             year={year}
+             {...dashboard}
               userCanAddTransaction={userCanAddTransaction}
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-6">
