@@ -115,13 +115,15 @@ const UpsertTransactionDialog = ({
           form.reset();
         }
       }}
-    >
+        >
       <DialogTrigger asChild></DialogTrigger>
       <DialogContent
+        className="custom-scrollbar"
         style={{
           height: "80%",
-          overflow: "scroll",
+          overflow: "auto",
           width: "90%",
+          padding: "30px 40px;",
           backgroundColor: "#6c00d1",
           pointerEvents: "auto",
           boxShadow: "4px 4px 10px #b8b8b852",

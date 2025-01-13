@@ -79,3 +79,10 @@ body {
     @apply h-full bg-background text-foreground;
   }
 }
+.custom-scrollbar::-webkit-scrollbar {
+  display: none; 
+  background-color: red;
+}
+.shadow-sm {
+  --tw-shadow: 1px 1px 8px 0px rgb(255 255 255 / 5%);
+}
