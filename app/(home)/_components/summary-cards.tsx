@@ -59,16 +59,19 @@ const SummaryCards = ({
           icon={<PiggyBankIcon size={16} />}
           title="Investido"
           amount={investmentsTotal}
+          className="w-1/2 sm:w-auto"
         />
         <SummaryCard
           icon={<TrendingUpIcon size={16} className="text-primary" />}
           title="Receita"
           amount={depositsTotal}
+          className="w-1/2 sm:w-auto"
         />
         <SummaryCard
           icon={<TrendingDownIcon size={16} className="text-red-500" />}
           title="Despesas"
           amount={expensesTotal}
+          className="w-1/2 sm:w-auto"
         />
       </div>
     </div>

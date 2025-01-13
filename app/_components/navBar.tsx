@@ -72,7 +72,7 @@ const NavBar = () => {
           {/* UserButton - Nome escondido no mobile */}
           <div className="flex items-center">
             <UserButton
-              showName={false} // Esconde o nome do usuário
+              showName={false}
               afterSignOutUrl="/"
             />
             {/* Mostra o nome apenas no desktop */}
@@ -83,55 +83,68 @@ const NavBar = () => {
         </div>
       </nav>
 
-      {/* Sidebar - Somente no Mobile */}
-      {isSidebarOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end lg:hidden">
-          <div
-            className={`h-full w-64 bg-secondary bg-opacity-90 shadow-lg relative transform transition-all duration-300 ease-in-out ${
-              isSidebarOpen ? "translate-x-0" : "translate-x-full"
-            }`}
+      {/* Sidebar Mobile com Animação */}
+      <div className={`fixed inset-0 z-50 lg:hidden transition-opacity duration-300 ease-in-out ${
+        isSidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      }`}>
+        {/* Overlay com fade */}
+        <div 
+          className={`absolute inset-0 bg-black transition-opacity duration-300 ${
+            isSidebarOpen ? "opacity-50" : "opacity-0"
+          }`}
+          onClick={() => setIsSidebarOpen(false)}
+        />
+        
+        {/* Sidebar com deslize */}
+        <div
+          className={`absolute right-0 h-full w-64 bg-secondary shadow-lg transition-transform duration-300 ease-in-out ${
+            isSidebarOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+          style={{ backgroundColor: "rgb(108, 0, 209)", borderRadius: "20px 0 0 20px" }}
+        >
+          <button
+            className="absolute top-4 right-4 p-2 z-50 text-black"
+            aria-label="Close menu"
+            onClick={() => setIsSidebarOpen(false)}
           >
-            <button
-              className="absolute top-4 right-4 p-2 z-50 text-black"
-              aria-label="Close menu"
-              onClick={() => setIsSidebarOpen(false)}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+              stroke="currentColor"
+              className="w-6 h-6"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
 
-            <nav className="p-6 pt-16">
-              <ul className="space-y-4">
-                {menuItems.map((item) => (
-                  <li key={item.title}>
-                    <Link
-                      href={item.url}
-                      className="flex items-center gap-4 text-lg font-medium text-black hover:text-gray-700"
-                      onClick={() => setIsSidebarOpen(false)}
-                    >
-                      {<item.icon className="w-5 h-5" />}
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
-                <AiReportButton hasPremiumPlan={false} month={""} />
-              </ul>
-            </nav>
-          </div>
+          <nav className="p-6 pt-16">
+            <ul className="mt-10 space-y-4">
+              {menuItems.map((item) => (
+                <li key={item.title}>
+                  <Link
+                    href={item.url}
+                    className="flex items-center gap-4 text-lg font-medium text-black hover:text-gray-700"
+                    onClick={() => setIsSidebarOpen(false)}
+                    style={{ backgroundColor: "white", borderRadius: "5px", padding: "3px 10px" }}
+                  >
+                    {<item.icon className="w-5 h-5" />}
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="flex justify-center mt-10">
+              <AiReportButton hasPremiumPlan={false} month={""} />
+            </div>
+          </nav>
         </div>
-      )}
+      </div>
     </>
   );
 };
