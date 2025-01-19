@@ -76,9 +76,9 @@ const NavBar = () => {
               afterSignOutUrl="/"
             />
             {/* Mostra o nome apenas no desktop */}
-            <span className="hidden lg:inline-block ml-2 font-medium">
+            {/* <span className="hidden lg:inline-block ml-2 font-medium">
               Eduardo Gomes
-            </span>
+            </span> */}
           </div>
         </div>
       </nav>
