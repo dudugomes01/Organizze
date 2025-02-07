@@ -124,7 +124,7 @@ const UpsertTransactionDialog = ({
           overflow: "auto",
           width: "90%",
           padding: "30px 40px;",
-          backgroundColor: "#6c00d1",
+          backgroundColor: "#252525",
           pointerEvents: "auto",
           boxShadow: "4px 4px 10px #b8b8b852",
           borderRadius: "15px",

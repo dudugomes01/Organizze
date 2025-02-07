@@ -102,7 +102,7 @@ const SummaryCards = ({
           </div>
 
           {/* Receitas e Despesas */}
-            <div className="flex justify-between max-w-xs mx-auto">
+            <div className="flex justify-around max-w-xs mx-auto">
             {/* Receitas */}
             <div className="flex items-center gap-3">
               <div className="bg-green-100 p-2.5 rounded-full">
