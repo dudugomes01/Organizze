@@ -2,6 +2,8 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { Home, Receipt, Plus, LineChart, Settings } from "lucide-react";
+import AddTransactionButton from "../../_components/add-transaction-button";
+
 
 const MobileBottomNav = () => {
   const router = useRouter();
@@ -10,7 +12,7 @@ const MobileBottomNav = () => {
   const navItems = [
     { icon: Home, path: "/", label: "Home" },
     { icon: LineChart, path: "/transactions", label: "Recibos" },
-    { icon: Plus, path: "/new", label: "Adicionar", isMain: true },
+    { icon: Plus, path: "/new", label: "Adicionar", isMain: true, buttonComponent: <AddTransactionButton userCanAddTransaction={true} /> },
     { icon: Receipt, path: "/subscription", label: "Análises" },
     { icon: Settings, path: "/settings", label: "Configurações" }
   ];

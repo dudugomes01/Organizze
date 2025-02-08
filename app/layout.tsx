@@ -5,6 +5,8 @@ import { dark } from "@clerk/themes";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { ptBR } from "@clerk/localizations";
+import MobileBottomNav from './(home)/_components/MobileBottomNav';
+
 
 const mulish = Mulish({
   subsets: ["latin-ext"]
@@ -29,9 +31,10 @@ export default function RootLayout({
         }}
         localization={ptBR}
       >
-        <div className="flex h-full flex-col overflow-hidden">{children}</div>
+        <div className="flex sm:h-full h-[120%] flex-col">{children}</div>
       </ClerkProvider>
       <Toaster />
+      <MobileBottomNav/>
     </body>
   </html>
   );

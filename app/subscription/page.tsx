@@ -22,14 +22,14 @@ const SubscriptionPage = async () => {
         <h1 className="text-2xl font-bold">Assinatura</h1>
 
         <div className="block sm:flex gap-6">
-          <Card className="w-full sm:w-[450px]">
-            <CardHeader className="border-b border-solid py-8">
+          <Card className="w-full sm:w-[450px] rounded-[20px]">
+            <CardHeader className="border-b border-solid py-8 bg-[#2f2f2f] rounded-[20px]">
               <h2 className="text-center text-2xl font-semibold">
                 Plano Básico
               </h2>
               <div className="flex items-center justify-center gap-3">
                 <span className="text-4xl">R$</span>
-                <span className="text-6xl font-semibold">0</span>
+                <span className="text-4xl font-semibold">0</span>
                 <div className="text-2xl text-muted-foreground">/mês</div>
               </div>
             </CardHeader>
@@ -41,16 +41,20 @@ const SubscriptionPage = async () => {
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <XIcon />
+                <XIcon className="text-[#fc0000]"/>
                 <p>Relatórios de IA</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <XIcon className="text-[#fc0000]"/>
+                <p>Planejamento</p>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="mt-10 sm:mt-0 w-full sm:w-[450px]">
-            <CardHeader className="relative border-b border-solid py-8">
+          <Card className="mt-10 sm:mt-0 w-full sm:w-[450px] rounded-[20px]">
+            <CardHeader className="relative border-b border-solid py-8 bg-[#0b3a00] rounded-[20px]">
               {hasPremiumPlan && (
-                <Badge className="absolute left-4 top-12 bg-primary/10 text-primary">
+                <Badge className="block w-[51px] sm:absolute sm:left-4 sm:top-12 bg-primary/10 hover:bg-black text-[#4cff00] bg-[#000000] sm:inline-block">
                   Ativo
                 </Badge>
               )}
@@ -74,7 +78,7 @@ const SubscriptionPage = async () => {
               </div>
               <div className="flex items-center gap-2">
                 <CheckIcon className="text-primary" />
-                <p>Transações ilimitadas</p>
+                <p>Planejamento</p>
               </div>
               <div className="flex items-center gap-2">
                 <CheckIcon className="text-primary" />
