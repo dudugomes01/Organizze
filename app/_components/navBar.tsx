@@ -14,7 +14,7 @@ const NavBar = () => {
 
   const menuItems = [
     { title: "Dashboard", url: "/", icon: ChartBar },
-    { title: "", url: "/transactions", icon: WalletCards },
+    { title: "Transação", url: "/transactions", icon: WalletCards },
     { title: "Assinatura", url: "/subscription", icon: CreditCard },
   ];
 
