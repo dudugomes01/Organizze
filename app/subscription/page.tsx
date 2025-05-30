@@ -6,6 +6,8 @@ import AcquirePlanButton from "./_components/acquire-plan-button";
 import { Badge } from "../_components/ui/badge";
 import NavBar from "../_components/navBar";
 import { getCurrentMonthTransactions } from "../_data/get-current-month-transactions";
+import MobileBottomNav from '../(home)/_components/MobileBottomNav';
+
 
 const SubscriptionPage = async () => {
   const { userId } = await auth();
@@ -93,6 +95,7 @@ const SubscriptionPage = async () => {
           </Card>
         </div>
       </div>
+      <MobileBottomNav />
     </>
   );
 };

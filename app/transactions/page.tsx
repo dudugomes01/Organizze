@@ -73,6 +73,7 @@ import { redirect } from "next/navigation";
 import { ScrollArea } from "../_components/ui/scroll-area";
 import { canUserAddTransaction } from "../_data/can-user-add-transaction";
 import TransactionList from "./_columns/indexMobile";
+import MobileBottomNav from '../(home)/_components/MobileBottomNav';
 
 const TransactionsPage = async () => {
   const { userId } = await auth();
@@ -121,6 +122,7 @@ const TransactionsPage = async () => {
           </div>
         </ScrollArea>
       </div>
+      <MobileBottomNav/>
     </>
   );
 };
