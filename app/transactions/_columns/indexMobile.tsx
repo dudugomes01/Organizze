@@ -1,64 +1,3 @@
-// "use client";
-
-// import { Transaction } from "@prisma/client";
-// import { ColumnDef } from "@tanstack/react-table";
-// import EditTransactionButton from "../_components/edit-transaction-button";
-// import DeleteTransactionButton from "../_components/delete-transaction-button";
-
-// export const transactionColumnsMobile: ColumnDef<Transaction>[] = [
-//   {
-//     accessorKey: "name",
-//     header: "Nome",
-//   },
-//   {
-//     accessorKey: "date",
-//     header: "Data",
-//     cell: ({ row: { original: transaction } }) =>
-//       new Date(transaction.date).toLocaleDateString("pt-BR", {
-//         day: "2-digit",
-//         month: "long",
-//         year: "numeric",
-//       }),
-//   },
-//   {
-//     accessorKey: "amount",
-//     header: "Valor",
-//     cell: ({ row: { original: transaction } }) => {
-//       const amount = Number(transaction.amount);
-//       const isDeposit = transaction.type === "DEPOSIT";
-//       const isExpense = transaction.type === "EXPENSE";
-
-//       const formattedAmount = new Intl.NumberFormat("pt-BR", {
-//         style: "currency",
-//         currency: "BRL",
-//       }).format(amount);
-
-//       return (
-//         <span
-//           className={`${
-//             isDeposit ? "text-green-500" : isExpense ? "text-red-500" : ""
-//           }`}
-//         >
-//           {isExpense ? `-${formattedAmount}` : formattedAmount}
-//         </span>
-//       );
-//     },
-//   },
-//   {
-//     accessorKey: "actions",
-//     header: "Ações",
-//     cell: ({ row: { original: transaction } }) => {
-//       return (
-//         <div className="space-x-1">
-//           <EditTransactionButton transaction={transaction} />
-//           <DeleteTransactionButton transactionId={transaction.id} />
-//         </div>
-//       );
-//     },
-//   },
-// ];
-
-
 "use client";
 
 import { Transaction } from "@prisma/client";
@@ -119,7 +58,7 @@ const TransactionList = ({ transactions }: { transactions: Transaction[] }) => {
               const isExpense = transaction.type === "EXPENSE";
               
               return (
-                <div key={transaction.id} className="flex items-center justify-between">
+                <div key={transaction.id} className="flex flex-col space-y-2">
                   <div className="flex items-center gap-3">
                     <div className={`p-2 rounded-lg ${isExpense ? 'bg-red-950/30' : 'bg-green-950/30'}`}>
                       <div className={`w-6 h-6 ${isExpense ? 'text-red-500' : 'text-green-500'}`}>
@@ -132,8 +71,8 @@ const TransactionList = ({ transactions }: { transactions: Transaction[] }) => {
                     </div>
                     <span className="text-white">{transaction.name}</span>
                   </div>
-                  
-                  <div className="flex items-center gap-3">
+              
+                    <div className="flex items-center justify-end gap-3">
                     <span className={isExpense ? 'text-red-500' : 'text-green-500'}>
                       {isExpense ? '-' : ''}{formatCurrency(amount)}
                     </span>
@@ -187,8 +126,8 @@ const DepositIcon = ({ className = "" }) => (
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M12 5v14" />  {/* Linha vertical */}
-      <path d="M5 12h15" />  {/* Linha horizontal */}
+      <path d="M12 5v14" /> 
+      <path d="M5 12h15" /> 
     </svg>
   );
   const ExpenseIcon = ({ className = "" }) => (
@@ -202,7 +141,7 @@ const DepositIcon = ({ className = "" }) => (
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M7 12h10" />  {/* Linha horizontal */}
+      <path d="M7 12h10" />  
     </svg>
   );
   

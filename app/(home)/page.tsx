@@ -58,7 +58,7 @@ const Home = async ({ searchParams }: HomeProps) => {
         </div>
 
         {/* Tornar a grid responsiva */}
-        <div className="grid grid-cols-1 sm:grid-cols-[2fr,1fr] gap-0 sm:gap-6">
+        <div className="grid grid-cols-1 pb-[100px] sm:grid-cols-[2fr,1fr] gap-0 sm:gap-6">
           <div className="flex flex-col gap-6 mb-4 sm:mb-0">
             <SummaryCards
              month={month}

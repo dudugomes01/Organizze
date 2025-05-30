@@ -89,8 +89,9 @@ body {
   background-color: #0c0c0c; */
 }
 .transactions-pie-chart{
-  background-color: rgb(0, 0, 0) !important;
+  background-color: #000f29 !important;
   font-size: 20px;
+  border-radius: 50px;
 }
 div.summary-card-amount {
   padding: 0 !important;
