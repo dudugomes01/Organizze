@@ -20,8 +20,8 @@ const MobileBottomNav = () => {
       isMain: true, 
       onClick: () => setDialogIsOpen(true) 
     },
-    { icon: Receipt, path: "/subscription", label: "Análises" },
-    { icon: PiggyBank, path: "/investment", label: "investimento" }
+    { icon: PiggyBank, path: "/investment", label: "investimento" },
+    { icon: Receipt, path: "/subscription", label: "Análises" }
     // { icon: Settings, path: "/settings", label: "Configurações" }
   ];
 

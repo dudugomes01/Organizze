@@ -20,7 +20,7 @@ const SubscriptionPage = async () => {
   return (
     <>
       <NavBar />
-      <div className="space-y-6 p-6">
+      <div className="space-y-6 p-6 h-full bg-[#060c00]">
         <h1 className="text-2xl font-bold">Assinatura</h1>
 
         <div className="block sm:flex gap-6 mb-[100px]">
@@ -49,6 +49,10 @@ const SubscriptionPage = async () => {
               <div className="flex items-center gap-2">
                 <XIcon className="text-[#fc0000]"/>
                 <p>Planejamento</p>
+              </div>
+               <div className="flex items-center gap-2">
+                <XIcon className="text-[#fc0000]"/>
+                <p>Importação OFX</p>
               </div>
             </CardContent>
           </Card>
@@ -84,12 +88,12 @@ const SubscriptionPage = async () => {
               </div>
               <div className="flex items-center gap-2">
                 <CheckIcon className="text-primary" />
-                <p>Transações ilimitadas</p>
+                <p>Importação OFX</p>
               </div>
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <CheckIcon className="text-primary" />
                 <p>Transações ilimitadas</p>
-              </div>
+              </div> */}
               <AcquirePlanButton />
             </CardContent>
           </Card>
