@@ -23,7 +23,7 @@ const SubscriptionPage = async () => {
       <div className="space-y-6 p-6">
         <h1 className="text-2xl font-bold">Assinatura</h1>
 
-        <div className="block sm:flex gap-6">
+        <div className="block sm:flex gap-6 mb-[100px]">
           <Card className="w-full sm:w-[450px] rounded-[20px]">
             <CardHeader className="border-b border-solid py-8 bg-[#2f2f2f] rounded-[20px]">
               <h2 className="text-center text-2xl font-semibold">
@@ -53,7 +53,7 @@ const SubscriptionPage = async () => {
             </CardContent>
           </Card>
 
-          <Card className="mt-10 sm:mt-0 w-full sm:w-[450px] rounded-[20px]">
+          <Card className="mt-10 sm:mt-0 w-full sm:w-[450px] rounded-[20px] mb-[100px]">
             <CardHeader className="relative border-b border-solid py-8 bg-[#0b3a00] rounded-[20px]">
               {hasPremiumPlan && (
                 <Badge className="block w-[51px] sm:absolute sm:left-4 sm:top-12 bg-primary/10 hover:bg-black text-[#4cff00] bg-[#000000] sm:inline-block">

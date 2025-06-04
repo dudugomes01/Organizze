@@ -12,6 +12,13 @@ const MONTHS = [
   { label: "março", value: { month: "03", year: "2025" } },
   { label: "abril", value: { month: "04", year: "2025" } },
   { label: "maio", value: { month: "05", year: "2025" } },
+  { label: "junho", value: { month: "06", year: "2025" } },
+  { label: "julho", value: { month: "07", year: "2025" } },
+  { label: "agosto", value: { month: "08", year: "2025" } },
+  { label: "setembro", value: { month: "09", year: "2025" } },
+  { label: "outubro", value: { month: "10", year: "2025" } },
+  { label: "novembro", value: { month: "11", year: "2025" } },
+  { label: "dezembro", value: { month: "12", year: "2025" } },
 ];
 
 const TimeSelect = () => {

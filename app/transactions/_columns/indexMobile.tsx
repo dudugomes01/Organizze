@@ -47,7 +47,7 @@ const TransactionList = ({ transactions }: { transactions: Transaction[] }) => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mb-[100px]">
       {Object.entries(groupedTransactions).map(([date, { transactions, balance }]) => (
         <div key={date} className="bg-gray-900 rounded-lg p-4 space-y-4">
           <div className="text-gray-400 text-sm">{date}</div>
