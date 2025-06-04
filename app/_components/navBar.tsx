@@ -14,14 +14,14 @@ const NavBar = () => {
 
   const menuItems = [
     { title: "Dashboard", url: "/", icon: ChartBar },
-    { title: "Transações", url: "/transactions", icon: WalletCards },
+    { title: "Transação", url: "/transactions", icon: WalletCards },
     { title: "Assinatura", url: "/subscription", icon: CreditCard },
   ];
 
   return (
     <>
       {/* NavBar principal */}
-      <nav className="flex justify-between border-b border-solid px-8 py-4">
+      <nav className="hidden lg:flex justify-between border-b border-solid px-8 py-4">
         {/* ESQUERDA */}
         <div className="flex items-center gap-10">
           <Image src="/logo.svg" width={173} height={39} alt="Finance AI" />
@@ -76,9 +76,9 @@ const NavBar = () => {
               afterSignOutUrl="/"
             />
             {/* Mostra o nome apenas no desktop */}
-            <span className="hidden lg:inline-block ml-2 font-medium">
+            {/* <span className="hidden lg:inline-block ml-2 font-medium">
               Eduardo Gomes
-            </span>
+            </span> */}
           </div>
         </div>
       </nav>

@@ -6,6 +6,8 @@ import AcquirePlanButton from "./_components/acquire-plan-button";
 import { Badge } from "../_components/ui/badge";
 import NavBar from "../_components/navBar";
 import { getCurrentMonthTransactions } from "../_data/get-current-month-transactions";
+import MobileBottomNav from '../(home)/_components/MobileBottomNav';
+
 
 const SubscriptionPage = async () => {
   const { userId } = await auth();
@@ -18,18 +20,18 @@ const SubscriptionPage = async () => {
   return (
     <>
       <NavBar />
-      <div className="space-y-6 p-6">
+      <div className="space-y-6 p-6 h-full bg-[#060c00]">
         <h1 className="text-2xl font-bold">Assinatura</h1>
 
-        <div className="flex gap-6">
-          <Card className="w-[450px]">
-            <CardHeader className="border-b border-solid py-8">
+        <div className="block sm:flex gap-6 mb-[100px]">
+          <Card className="w-full sm:w-[450px] rounded-[20px]">
+            <CardHeader className="border-b border-solid py-8 bg-[#2f2f2f] rounded-[20px]">
               <h2 className="text-center text-2xl font-semibold">
                 Plano Básico
               </h2>
               <div className="flex items-center justify-center gap-3">
                 <span className="text-4xl">R$</span>
-                <span className="text-6xl font-semibold">0</span>
+                <span className="text-4xl font-semibold">0</span>
                 <div className="text-2xl text-muted-foreground">/mês</div>
               </div>
             </CardHeader>
@@ -41,16 +43,24 @@ const SubscriptionPage = async () => {
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <XIcon />
+                <XIcon className="text-[#fc0000]"/>
                 <p>Relatórios de IA</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <XIcon className="text-[#fc0000]"/>
+                <p>Planejamento</p>
+              </div>
+               <div className="flex items-center gap-2">
+                <XIcon className="text-[#fc0000]"/>
+                <p>Importação OFX</p>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="w-[450px]">
-            <CardHeader className="relative border-b border-solid py-8">
+          <Card className="mt-10 sm:mt-0 w-full sm:w-[450px] rounded-[20px] mb-[100px]">
+            <CardHeader className="relative border-b border-solid py-8 bg-[#0b3a00] rounded-[20px]">
               {hasPremiumPlan && (
-                <Badge className="absolute left-4 top-12 bg-primary/10 text-primary">
+                <Badge className="block w-[51px] sm:absolute sm:left-4 sm:top-12 bg-primary/10 hover:bg-black text-[#4cff00] bg-[#000000] sm:inline-block">
                   Ativo
                 </Badge>
               )}
@@ -72,11 +82,24 @@ const SubscriptionPage = async () => {
                 <CheckIcon className="text-primary" />
                 <p>Relatórios de IA</p>
               </div>
+              <div className="flex items-center gap-2">
+                <CheckIcon className="text-primary" />
+                <p>Planejamento</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckIcon className="text-primary" />
+                <p>Importação OFX</p>
+              </div>
+              {/* <div className="flex items-center gap-2">
+                <CheckIcon className="text-primary" />
+                <p>Transações ilimitadas</p>
+              </div> */}
               <AcquirePlanButton />
             </CardContent>
           </Card>
         </div>
       </div>
+      <MobileBottomNav />
     </>
   );
 };
