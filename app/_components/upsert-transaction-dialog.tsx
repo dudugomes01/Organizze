@@ -236,6 +236,7 @@ return (
         pointerEvents: "auto",
         boxShadow: "4px 4px 10px #b8b8b852",
         borderRadius: "15px",
+        zIndex: 1,
       }}
     >
       <DialogHeader>

@@ -56,6 +56,7 @@ interface SummaryCardsProps {
   balance: number;
   depositsTotal: number;
   investmentsTotal: number;
+  accumulatedInvestments: number;
   expensesTotal: number;
   userCanAddTransaction?: boolean;
 }
@@ -65,6 +66,7 @@ const SummaryCards = ({
   depositsTotal,
   expensesTotal,
   investmentsTotal,
+  accumulatedInvestments,
   userCanAddTransaction,
 }: SummaryCardsProps) => {
   const [showValues, setShowValues] = React.useState(true);
@@ -129,8 +131,24 @@ const SummaryCards = ({
               </div>
             </div>
             </div>
+
+            {/* Investimentos */}
+            <div className="flex justify-center mt-4">
+            <div className="flex items-center gap-3">
+                <div className="bg-[#36005cb0] p-2.5 rounded-full">
+                <PiggyBankIcon size={20} className="text-[#9600ff]" />
+                </div>
+              <div>
+              <p className="text-sm text-gray-500">Investimentos</p>
+                <p className="text-[#9600ff] font-medium">
+                {formatValue(accumulatedInvestments)}
+                </p>
+              </div>
+            </div>
+            </div>
+            </div>
         </div>
-      </div>
+      
 
       {/* Versão Desktop */}
       <div className="space-y-6 hidden md:block">

@@ -25,14 +25,16 @@ export const getDashboard = async (month: string, year: string) => {
     )?._sum?.amount ?? 0
   );
 
-  const accumulatedInvestments = Number(
-    (
-      await db.transaction.aggregate({
-        where: { ...accumulatedWhere, type: "INVESTMENT" },
-        _sum: { amount: true },
-      })
-    )?._sum?.amount ?? 0
-  );
+  const totalInvestido = await db.transaction.aggregate({
+    _sum: { amount: true },
+    where: {
+      type: "INVESTMENT",
+      date: { lte: new Date(`${year}-${month}-31`) },
+      userId: userId,
+    },
+  });
+
+  const accumulatedInvestments = Number(totalInvestido._sum.amount ?? 0);
 
   const accumulatedExpenses = Number(
     (
@@ -122,7 +124,8 @@ export const getDashboard = async (month: string, year: string) => {
   return {
     balance,
     depositsTotal,
-    investmentsTotal,
+    investmentsTotal, 
+    accumulatedInvestments,
     expensesTotal,
     typesPercentage,
     totalExpensePerCategory,

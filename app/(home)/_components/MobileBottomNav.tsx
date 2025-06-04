@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { Home, Receipt, Plus, LineChart, Settings } from "lucide-react";
+import { Home, Receipt, Plus, LineChart, PiggyBank } from "lucide-react";
 import AddTransactionButton from "../../_components/add-transaction-button";
 import { useState } from "react";
 
@@ -21,7 +21,8 @@ const MobileBottomNav = () => {
       onClick: () => setDialogIsOpen(true) 
     },
     { icon: Receipt, path: "/subscription", label: "Análises" },
-    { icon: Settings, path: "/settings", label: "Configurações" }
+    { icon: PiggyBank, path: "/investment", label: "investimento" }
+    // { icon: Settings, path: "/settings", label: "Configurações" }
   ];
 
   return (

@@ -47,53 +47,59 @@ const TransactionList = ({ transactions }: { transactions: Transaction[] }) => {
   };
 
   return (
-    <div className="space-y-4 mb-[100px]">
-      {Object.entries(groupedTransactions).map(([date, { transactions, balance }]) => (
-        <div key={date} className="bg-gray-900 rounded-lg p-4 space-y-4">
-          <div className="text-gray-400 text-sm">{date}</div>
-          
-          <div className="space-y-3">
-            {transactions.map((transaction) => {
-              const amount = Number(transaction.amount);
-              const isExpense = transaction.type === "EXPENSE";
-              
-              return (
-                <div key={transaction.id} className="flex flex-col space-y-2">
-                  <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-lg ${isExpense ? 'bg-red-950/30' : 'bg-green-950/30'}`}>
-                      <div className={`w-6 h-6 ${isExpense ? 'text-red-500' : 'text-green-500'}`}>
-                        {isExpense ? (
-                          <ExpenseIcon className="w-full h-full" />
-                        ) : (
-                          <DepositIcon className="w-full h-full" />
-                        )}
+    <div className="space-y-4 mb-[100px] mt-[80px]" >
+      {Object.keys(groupedTransactions).length === 0 ? (
+        <div className="text-center text-black py-10" style={{ backgroundColor: '#adff2f', borderRadius: '15px' }}>
+          Não há nada cadastrado no mês selecionado!
+        </div>
+      ) : (
+        Object.entries(groupedTransactions).map(([date, { transactions, balance }]) => (
+          <div key={date} className="bg-gray-900 rounded-lg p-4 space-y-4">
+            <div className="text-gray-400 text-sm">{date}</div>
+            
+            <div className="space-y-3">
+              {transactions.map((transaction) => {
+                const amount = Number(transaction.amount);
+                const isExpense = transaction.type === "EXPENSE";
+                
+                return (
+                  <div key={transaction.id} className="flex flex-col space-y-2">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-lg ${isExpense ? 'bg-red-950/30' : 'bg-green-950/30'}`}>
+                        <div className={`w-6 h-6 ${isExpense ? 'text-red-500' : 'text-green-500'}`}>
+                          {isExpense ? (
+                            <ExpenseIcon className="w-full h-full" />
+                          ) : (
+                            <DepositIcon className="w-full h-full" />
+                          )}
+                        </div>
+                      </div>
+                      <span className="text-white">{transaction.name}</span>
+                    </div>
+                
+                      <div className="flex items-center justify-end gap-3">
+                      <span className={isExpense ? 'text-red-500' : 'text-green-500'}>
+                        {isExpense ? '-' : ''}{formatCurrency(amount)}
+                      </span>
+                      <div className="flex gap-1">
+                        <EditTransactionButton transaction={transaction} />
+                        <DeleteTransactionButton transactionId={transaction.id} />
                       </div>
                     </div>
-                    <span className="text-white">{transaction.name}</span>
                   </div>
-              
-                    <div className="flex items-center justify-end gap-3">
-                    <span className={isExpense ? 'text-red-500' : 'text-green-500'}>
-                      {isExpense ? '-' : ''}{formatCurrency(amount)}
-                    </span>
-                    <div className="flex gap-1">
-                      <EditTransactionButton transaction={transaction} />
-                      <DeleteTransactionButton transactionId={transaction.id} />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+            
+            <div className="flex justify-between pt-3 border-t border-gray-800">
+              <span className="text-gray-400">Balanço do dia</span>
+              <span className={balance >= 0 ? 'text-green-500' : 'text-red-500'}>
+                {balance >= 0 ? '' : '-'}{formatCurrency(balance)}
+              </span>
+            </div>
           </div>
-          
-          <div className="flex justify-between pt-3 border-t border-gray-800">
-            <span className="text-gray-400">Balanço do dia</span>
-            <span className={balance >= 0 ? 'text-green-500' : 'text-red-500'}>
-              {balance >= 0 ? '' : '-'}{formatCurrency(balance)}
-            </span>
-          </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };
