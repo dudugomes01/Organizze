@@ -80,7 +80,9 @@ export const getDashboard = async (month: string, year: string) => {
     )?._sum?.amount ?? 0
   );
 
-  const balance = accumulatedDeposits - accumulatedExpenses - accumulatedInvestments;
+   const rawBalance = accumulatedDeposits - accumulatedExpenses - accumulatedInvestments;
+  const balance = rawBalance > 0 ? rawBalance : 0;
+  // const balance = accumulatedDeposits - accumulatedExpenses - accumulatedInvestments;
 
   const transactionsTotal = depositsTotal + investmentsTotal + expensesTotal;
 
