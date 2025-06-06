@@ -54,7 +54,7 @@ const TransactionList = ({ transactions }: { transactions: Transaction[] }) => {
         </div>
       ) : (
         Object.entries(groupedTransactions).map(([date, { transactions, balance }]) => (
-          <div key={date} className="bg-gray-900 rounded-lg p-4 space-y-4">
+          <div key={date} className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20 rounded-lg p-4 space-y-4">
             <div className="text-gray-400 text-sm">{date}</div>
             
             <div className="space-y-3">
@@ -103,24 +103,6 @@ const TransactionList = ({ transactions }: { transactions: Transaction[] }) => {
     </div>
   );
 };
-
-// Simple icon components
-// const CarIcon = ({ className = "" }) => (
-//   <svg
-//     className={className}
-//     viewBox="0 0 24 24"
-//     fill="none"
-//     stroke="currentColor"
-//     strokeWidth="2"
-//     strokeLinecap="round"
-//     strokeLinejoin="round"
-//   >
-//     <path d="M14 16H9m10 0h3v-3.15a1 1 0 00-.84-.99L16 11l-2.7-3.6a1 1 0 00-.8-.4H5.24a2 2 0 00-1.8 1.1l-.8 1.63A6 6 0 002 12.42V16h2" />
-//     <circle cx="6.5" cy="16.5" r="2.5" />
-//     <circle cx="16.5" cy="16.5" r="2.5" />
-//   </svg>
-// );
-
 const DepositIcon = ({ className = "" }) => (
     <svg
       className={className}
