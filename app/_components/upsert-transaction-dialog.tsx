@@ -717,7 +717,7 @@ const UpsertTransactionDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogTrigger asChild></DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] w-[95%] max-h-[90vh] overflow-hidden bg-white dark:bg-gray-900 border-0 shadow-2xl">
+      <DialogContent className="sm:max-w-[600px] w-[95%] max-h-[90vh] h-[700px] overflow-hidden bg-white dark:bg-gray-900 border-0 shadow-2xl">
       <DialogHeader className="pb-6 border-b border-gray-100 dark:border-gray-700">
         <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
