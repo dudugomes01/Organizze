@@ -20,82 +20,85 @@ const SubscriptionPage = async () => {
   return (
     <>
       <NavBar />
-      <div className="space-y-6 p-6 h-full bg-[#060c00]">
-        <h1 className="text-2xl font-bold">Assinatura</h1>
-
-        <div className="block sm:flex gap-6 mb-[100px]">
-          <Card className="w-full sm:w-[450px] rounded-[20px]">
-            <CardHeader className="border-b border-solid py-8 bg-[#2f2f2f] rounded-[20px]">
-              <h2 className="text-center text-2xl font-semibold">
+  <div className="min-h-screen h-full w-full flex flex-col items-center py-8 px-2 pb-32 sm:pb-8">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#4cff00] via-[#00ffd0] to-[#00bfff] drop-shadow-lg mb-8 tracking-tight">
+          Assinatura
+        </h1>
+  <div className="flex flex-col sm:flex-row gap-10 w-full max-w-5xl justify-center items-stretch mb-32 px-2 sm:px-0">
+          {/* Plano Básico */}
+          <Card className="w-full max-w-xs sm:w-[360px] h-[472px] mx-auto rounded-3xl shadow-xl bg-[#181c1f] bg-opacity-90 border border-white/20 hover:scale-[1.03] transition-transform duration-300">
+            <CardHeader className="py-8 bg-gradient-to-b from-[#232526]/80 to-[#2f2f2f]/80 rounded-3xl border-b border-white/10">
+              <h2 className="text-center text-2xl font-bold text-white tracking-wide mb-2">
                 Plano Básico
               </h2>
-              <div className="flex items-center justify-center gap-3">
-                <span className="text-4xl">R$</span>
-                <span className="text-4xl font-semibold">0</span>
-                <div className="text-2xl text-muted-foreground">/mês</div>
+              <div className="flex items-end justify-center gap-2">
+                <span className="text-3xl text-[#4cff00] font-bold">R$</span>
+                <span className="text-5xl font-extrabold text-white">0</span>
+                <span className="text-xl text-gray-300 mb-1">/mês</span>
               </div>
             </CardHeader>
-            <CardContent className="space-y-6 py-8">
-              <div className="flex items-center gap-2">
-                <CheckIcon className="text-primary" />
-                <p>
-                  Apenas 10 transações por mês ({currentMonthTransactions}/10)
+            <CardContent className="space-y-5 py-8 px-4">
+              <div className="flex items-center gap-3">
+                <CheckIcon className="text-[#4cff00] w-6 h-6" />
+                <p className="text-white/90 text-lg">
+                  Até 10 transações/mês <span className="ml-1 text-[#4cff00] font-bold">({currentMonthTransactions}/10)</span>
                 </p>
               </div>
-              <div className="flex items-center gap-2">
-                <XIcon className="text-[#fc0000]"/>
-                <p>Relatórios de IA</p>
+              <div className="flex items-center gap-3 opacity-60">
+                <XIcon className="text-[#fc0000] w-6 h-6"/>
+                <p className="text-white/80 text-lg">Relatórios de IA</p>
               </div>
-              <div className="flex items-center gap-2">
-                <XIcon className="text-[#fc0000]"/>
-                <p>Planejamento</p>
+              <div className="flex items-center gap-3 opacity-60">
+                <XIcon className="text-[#fc0000] w-6 h-6"/>
+                <p className="text-white/80 text-lg">Planejamento</p>
               </div>
-               <div className="flex items-center gap-2">
-                <XIcon className="text-[#fc0000]"/>
-                <p>Importação OFX</p>
+              <div className="flex items-center gap-3 opacity-60">
+                <XIcon className="text-[#fc0000] w-6 h-6"/>
+                <p className="text-white/80 text-lg">Importação OFX</p>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="mt-10 sm:mt-0 w-full sm:w-[450px] rounded-[20px] mb-[100px]">
-            <CardHeader className="relative border-b border-solid py-8 bg-[#0b3a00] rounded-[20px]">
+          {/* Plano Premium */}
+          <Card className="w-full max-w-xs sm:w-[420px] mx-auto rounded-3xl shadow-2xl border-2 border-[#4cff00]/40 bg-gradient-to-br from-[#0b3a00]/80 via-[#1a4d00]/80 to-[#00ffd0]/10 backdrop-blur-lg relative overflow-visible hover:scale-[1.05] transition-transform duration-300 mb-40">
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#4cff00]/20 rounded-full blur-2xl z-0 pointer-events-none" />
+            <CardHeader className="relative py-8 bg-gradient-to-b from-[#0b3a00]/80 to-[#1a4d00]/80 rounded-3xl border-b border-white/10 z-10">
               {hasPremiumPlan && (
-                <Badge className="block w-[51px] sm:absolute sm:left-4 sm:top-12 bg-primary/10 hover:bg-black text-[#4cff00] bg-[#000000] sm:inline-block">
+                <Badge className="absolute left-4 top-8 bg-[#4cff00]/20 text-[#4cff00] border border-[#4cff00] px-4 py-1 rounded-full text-base font-bold shadow-md">
                   Ativo
                 </Badge>
               )}
-              <h2 className="text-center text-2xl font-semibold">
+              <h2 className="text-center text-2xl font-bold text-[#4cff00] tracking-wide mb-2">
                 Plano Premium
               </h2>
-              <div className="flex items-center justify-center gap-3">
-                <span className="text-4xl">R$</span>
-                <span className="text-6xl font-semibold">19</span>
-                <div className="text-2xl text-muted-foreground">/mês</div>
+              <div className="flex items-end justify-center gap-2">
+                <span className="text-3xl text-[#4cff00] font-bold">R$</span>
+                <span className="text-6xl font-extrabold text-white drop-shadow-[0_2px_10px_#4cff00aa]">19</span>
+                <span className="text-xl text-gray-300 mb-1">/mês</span>
               </div>
             </CardHeader>
-            <CardContent className="space-y-6 py-8">
-              <div className="flex items-center gap-2">
-                <CheckIcon className="text-primary" />
-                <p>Transações ilimitadas</p>
+            <CardContent className="space-y-5 py-8 px-4 z-10">
+              <div className="flex items-center gap-3">
+                <CheckIcon className="text-[#4cff00] w-6 h-6 animate-pulse" />
+                <p className="text-white/90 text-lg font-semibold">Transações ilimitadas</p>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckIcon className="text-primary" />
-                <p>Relatórios de IA</p>
+              <div className="flex items-center gap-3">
+                <CheckIcon className="text-[#4cff00] w-6 h-6 animate-pulse" />
+                <p className="text-white/90 text-lg font-semibold">Relatórios de IA</p>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckIcon className="text-primary" />
-                <p>Planejamento</p>
+              <div className="flex items-center gap-3">
+                <CheckIcon className="text-[#4cff00] w-6 h-6 animate-pulse" />
+                <p className="text-white/90 text-lg font-semibold">Planejamento</p>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckIcon className="text-primary" />
-                <p>Importação OFX</p>
+              <div className="flex items-center gap-3">
+                <CheckIcon className="text-[#4cff00] w-6 h-6 animate-pulse" />
+                <p className="text-white/90 text-lg font-semibold">Importação OFX</p>
               </div>
-              {/* <div className="flex items-center gap-2">
-                <CheckIcon className="text-primary" />
-                <p>Transações ilimitadas</p>
-              </div> */}
-              <AcquirePlanButton />
+              <div className="flex justify-center mt-8">
+                <AcquirePlanButton />
+              </div>
             </CardContent>
+            <div className="absolute bottom-0 left-0 h-2 bg-gradient-to-r from-[#4cff00]/60 via-[#00ffd0]/40 to-transparent rounded-b-3xl" style={{ width: '290px', marginLeft: '5px' }} />
           </Card>
         </div>
       </div>
