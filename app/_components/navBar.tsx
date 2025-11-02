@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
-import { CreditCard, WalletCards, ChartBar } from "lucide-react";
+import { CreditCard, WalletCards, ChartBar, PiggyBank } from "lucide-react";
 import AiReportButton from "../(home)/_components/ai-report-button";
 
 const NavBar = () => {
@@ -15,6 +15,7 @@ const NavBar = () => {
   const menuItems = [
     { title: "Dashboard", url: "/", icon: ChartBar },
     { title: "Transação", url: "/transactions", icon: WalletCards },
+    { title: "Investimento", url: "/investment", icon: PiggyBank },
     { title: "Assinatura", url: "/subscription", icon: CreditCard },
   ];
 

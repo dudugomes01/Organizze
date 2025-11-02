@@ -20,7 +20,7 @@ const SubscriptionPage = async () => {
   return (
     <>
       <NavBar />
-  <div className="min-h-screen h-full w-full flex flex-col items-center py-8 px-2 pb-32 sm:pb-8">
+  <div className="min-h-screen h-full w-full bg-gradient-to-br from-[#0f2027] via-[#2c5364] to-[#0b3a00] flex flex-col items-center py-8 px-2 pb-32 sm:pb-8">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#4cff00] via-[#00ffd0] to-[#00bfff] drop-shadow-lg mb-8 tracking-tight">
           Assinatura
         </h1>

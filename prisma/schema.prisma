@@ -26,6 +26,48 @@ model Transaction {
   userId        String
 }
 
+model InvestmentCategory {
+  id          String                @id @default(uuid())
+  name        String
+  type        InvestmentCategoryType
+  description String?
+  color       String                @default("#9600ff")
+  isActive    Boolean               @default(true)
+  userId      String
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  allocations InvestmentAllocation[]
+
+  @@unique([name, userId])
+}
+
+model InvestmentAllocation {
+  id                   String             @id @default(uuid())
+  amount               Decimal            @db.Decimal(10, 2)
+  percentage           Decimal?           @db.Decimal(5, 2)
+  targetPercentage     Decimal?           @db.Decimal(5, 2)
+  userId               String
+  investmentCategoryId String
+  investmentCategory   InvestmentCategory @relation(fields: [investmentCategoryId], references: [id], onDelete: Cascade)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  @@unique([userId, investmentCategoryId])
+}
+
+model InvestmentGoal {
+  id           String   @id @default(uuid())
+  name         String
+  targetAmount Decimal  @db.Decimal(10, 2)
+  currentAmount Decimal @db.Decimal(10, 2) @default(0)
+  deadline     DateTime?
+  description  String?
+  userId       String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
 enum TransactionType {
   DEPOSIT
   EXPENSE
@@ -52,4 +94,13 @@ enum TransactionPaymentMethod {
   CASH
   PIX
   OTHER
+}
+
+enum InvestmentCategoryType {
+  FIXED_INCOME      // Renda Fixa (CDI, CDB, Tesouro Direto)
+  REAL_ESTATE       // Fundos Imobiliários
+  STOCKS            // Ações
+  CUSTOM            // Criado pelo usuário
+  EMERGENCY_FUND    // Reserva de Emergência
+  CRYPTO            // Criptomoedas
 }
