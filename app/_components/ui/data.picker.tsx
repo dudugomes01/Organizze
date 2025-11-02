@@ -35,7 +35,8 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
     if (e.target.value && onChange) {
       const newDate = new Date(e.target.value + 'T00:00:00');
       // SelectSingleEventHandler expects (date, selectedDate, activeModifiers, e)
-      onChange(newDate, newDate, {}, undefined as any);
+      // Using unknown first to avoid type issues with undefined
+      onChange(newDate, newDate, {}, undefined as unknown as React.MouseEvent<Element, MouseEvent>);
     }
   };
 

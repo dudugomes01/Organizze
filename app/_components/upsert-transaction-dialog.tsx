@@ -188,8 +188,14 @@ const UpsertTransactionDialog = ({
 
       const stmts = json?.OFX?.BANKMSGSRSV1?.STMTTRNRS?.STMTRS?.BANKTRANLIST?.STMTTRN || [];
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const imported: FormSchema[] = stmts.map((trn: any) => {
+      type OfxTransaction = {
+        TRNAMT?: string;
+        TRNTYPE?: string;
+        MEMO?: string;
+        DTPOSTED?: string;
+      };
+
+      const imported: FormSchema[] = stmts.map((trn: OfxTransaction) => {
         const amount = Number(trn.TRNAMT || 0);
         const type = trn.TRNTYPE === "CREDIT" || amount > 0
           ? TransactionType.DEPOSIT
