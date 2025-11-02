@@ -68,27 +68,27 @@ export default function CreateCategoryDialog() {
           Nova Categoria
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md bg-gray-900 border-gray-700">
+      <DialogContent className="!mx-auto w-[calc(100vw-2rem)] max-w-sm sm:max-w-md bg-gray-900 border-gray-700 !left-1/2 !transform !-translate-x-1/2">
         <DialogHeader>
           <DialogTitle className="text-white">Criar Nova Categoria</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+        <form onSubmit={handleSubmit} className="space-y-4 w-full">
+          <div className="w-full">
             <Label htmlFor="name" className="text-gray-300">Nome da Categoria</Label>
             <Input
               id="name"
               placeholder="Ex: Nubank, XP Investimentos..."
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="bg-gray-800 border-gray-600 text-white"
+              className="bg-gray-800 border-gray-600 text-white w-full"
               maxLength={50}
             />
           </div>
 
-          <div>
+          <div className="w-full">
             <Label htmlFor="type" className="text-gray-300">Tipo de Investimento</Label>
             <Select value={formData.type} onValueChange={(value) => setFormData({ ...formData, type: value })}>
-              <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
+              <SelectTrigger className="bg-gray-800 border-gray-600 text-white w-full">
                 <SelectValue placeholder="Selecione o tipo" />
               </SelectTrigger>
               <SelectContent className="bg-gray-800 border-gray-600">
@@ -101,27 +101,29 @@ export default function CreateCategoryDialog() {
             </Select>
           </div>
 
-          <div>
+          <div className="w-full">
             <Label htmlFor="description" className="text-gray-300">Descrição (Opcional)</Label>
             <Input
               id="description"
               placeholder="Detalhes sobre este investimento..."
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="bg-gray-800 border-gray-600 text-white"
+              className="bg-gray-800 border-gray-600 text-white w-full"
             />
           </div>
 
-          <div>
+          <div className="w-full">
             <Label className="text-gray-300">Cor</Label>
-            <div className="flex gap-2 mt-2">
+            <div className="flex gap-2 mt-2 flex-wrap">
               {COLORS.map((color) => (
                 <button
                   key={color}
                   type="button"
-                  className={`w-8 h-8 rounded-full border-2 ${
-                    formData.color === color ? "border-white" : "border-gray-600"
-                  }`}
+                  className={`${
+                    formData.color === color 
+                      ? "w-10 h-10 border-2 border-white shadow-lg transform scale-110" 
+                      : "w-8 h-8 border-2 border-gray-600 hover:scale-105"
+                  } rounded-full transition-all duration-200 ease-in-out`}
                   style={{ backgroundColor: color }}
                   onClick={() => setFormData({ ...formData, color })}
                 />
@@ -129,7 +131,7 @@ export default function CreateCategoryDialog() {
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-full">
             <Button
               type="button"
               variant="outline"

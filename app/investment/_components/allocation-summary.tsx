@@ -32,15 +32,15 @@ export default function AllocationSummary({
       {/* Card de Resumo Geral */}
       <Card className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl border border-gray-100">
         <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-gray-800">
+          <CardTitle className="flex items-center gap-2 text-white">
             <PieChartIcon className="w-5 h-5 text-[#9600ff]" />
             Resumo da Carteira
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex justify-between items-center">
-            <span className="text-gray-600">Total Investido:</span>
-            <span className="font-bold text-lg text-gray-800">
+            <span className="text-gray-400">Total Investido:</span>
+            <span className="font-bold text-lg text-gray-300">
               {new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -49,7 +49,7 @@ export default function AllocationSummary({
           </div>
           
           <div className="flex justify-between items-center">
-            <span className="text-gray-600">Total Alocado:</span>
+            <span className="text-gray-400">Total Alocado:</span>
             <span className="font-bold text-lg text-green-600">
               {new Intl.NumberFormat("pt-BR", {
                 style: "currency",
