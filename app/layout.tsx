@@ -24,14 +24,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-  <body className={`${mulish.className} dark antialiased`}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+      </head>
+      <body className={`${mulish.className} dark antialiased`}>
       <ClerkProvider
         appearance={{
           baseTheme: dark,
         }}
         localization={ptBR}
       >
-        <div className="flex sm:h-full h-[120%] flex-col">{children}</div>
+        <div className="flex sm:h-full flex-col">{children}</div>
       </ClerkProvider>
       <Toaster />
       {/* <MobileBottomNav/> */}

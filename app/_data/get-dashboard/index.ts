@@ -9,6 +9,19 @@ export const getDashboard = async (month: string, year: string) => {
     throw new Error("Unauthorized");
   }
 
+  // Buscar assinaturas ativas
+  const activeSubscriptions = await db.recurringSubscription.findMany({
+    where: {
+      userId,
+      isActive: true,
+    },
+  });
+
+  const subscriptionsTotal = activeSubscriptions.reduce(
+    (sum, sub) => sum + Number(sub.amount),
+    0
+  );
+
   const accumulatedWhere = {
     userId,
     date: {
@@ -43,7 +56,7 @@ export const getDashboard = async (month: string, year: string) => {
         _sum: { amount: true },
       })
     )?._sum?.amount ?? 0
-  );
+  ) + subscriptionsTotal;
 
   const currentMonthWhere = {
     userId,
@@ -78,7 +91,7 @@ export const getDashboard = async (month: string, year: string) => {
         _sum: { amount: true },
       })
     )?._sum?.amount ?? 0
-  );
+  ) + subscriptionsTotal;
 
    const rawBalance = accumulatedDeposits - accumulatedExpenses - accumulatedInvestments;
   const balance = rawBalance > 0 ? rawBalance : 0;
@@ -129,8 +142,10 @@ export const getDashboard = async (month: string, year: string) => {
     investmentsTotal, 
     accumulatedInvestments,
     expensesTotal,
+    subscriptionsTotal,
     typesPercentage,
     totalExpensePerCategory,
     lastTransactions: JSON.parse(JSON.stringify(lastTransactions)),
+    activeSubscriptions: JSON.parse(JSON.stringify(activeSubscriptions)),
   };
 };
