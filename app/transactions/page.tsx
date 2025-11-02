@@ -16,6 +16,7 @@ import { Card, CardContent, CardHeader } from "../_components/ui/card";
 // import { Badge } from "../_components/ui/badge";
 // import { Separator } from "../_components/ui/separator";
 import { TrendingUp, TrendingDown, Calendar } from "lucide-react";
+import SejaPremiumMobile from "../_components/seja-premium-mobile";
 
 
 type Props = {
@@ -267,6 +268,8 @@ const TransactionsPage = async ({ searchParams }: Props) => {
             </CardContent>
           </Card>
         )} */}
+        
+        <SejaPremiumMobile className="px-4 py-6 mb-20" />
       </div>
 
       <MobileBottomNav />

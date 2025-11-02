@@ -10,6 +10,7 @@ import AllocationLimitsCard from './_components/allocation-limits-card';
 import { getInvestmentCategories } from './_actions/manage-investment-category';
 import { getAllocationsWithCategories } from './_actions/manage-allocation';
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/_components/ui/card";
+import SejaPremiumMobile from "../_components/seja-premium-mobile";
 
 export default async function InvestmentPage() {
   const now = new Date();
@@ -190,15 +191,16 @@ export default async function InvestmentPage() {
       </Card>
 
       {/* Footer motivacional */}
-      <div className="text-center mb-20">
+      <div className="text-center">
         <p className="text-gray-400 text-sm">
           💎 Cada real investido hoje é um passo rumo à sua liberdade financeira
         </p>
       </div>
 
-      <MobileBottomNav />
+      <SejaPremiumMobile className="px-4 py-6 mb-20" />
         </main>
       </div>
+      <MobileBottomNav />
     </>
   );
 }

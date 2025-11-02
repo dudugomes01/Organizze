@@ -34,7 +34,7 @@ export default function RootLayout({
         }}
         localization={ptBR}
       >
-        <div className="flex sm:h-full h-[120%] flex-col">{children}</div>
+        <div className="flex sm:h-full flex-col">{children}</div>
       </ClerkProvider>
       <Toaster />
       {/* <MobileBottomNav/> */}
