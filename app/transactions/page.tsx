@@ -69,22 +69,26 @@ const TransactionsPage = async ({ searchParams }: Props) => {
     },
   });
 
+  // Converter Decimal para number para compatibilidade com componentes client
+  const parsedSubscriptions = JSON.parse(JSON.stringify(activeSubscriptions));
+
   // Cálculos para o resumo
-  const totalIncome = parsedTransactions
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((t: any) => t.type === "INCOME")
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .reduce((sum: number, t: any) => sum + Number(t.amount), 0);
+  type TransactionData = {
+    type: string;
+    amount: number;
+  };
+
+  const totalIncome = (parsedTransactions as TransactionData[])
+    .filter((t) => t.type === "INCOME")
+    .reduce((sum: number, t) => sum + Number(t.amount), 0);
   
-  const totalExpenses = parsedTransactions
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((t: any) => t.type === "EXPENSE")
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .reduce((sum: number, t: any) => sum + Number(t.amount), 0);
+  const totalExpenses = (parsedTransactions as TransactionData[])
+    .filter((t) => t.type === "EXPENSE")
+    .reduce((sum: number, t) => sum + Number(t.amount), 0);
   
   // Adicionar o valor das assinaturas ativas às despesas
-  const subscriptionsTotal = activeSubscriptions.reduce(
-    (sum, sub) => sum + Number(sub.amount),
+  const subscriptionsTotal = parsedSubscriptions.reduce(
+    (sum: number, sub: { amount: number }) => sum + Number(sub.amount),
     0
   );
   
@@ -249,7 +253,7 @@ const TransactionsPage = async ({ searchParams }: Props) => {
               <ScrollArea className="h-full">
                 {/* Mobile View */}
                 <div className="sm:hidden">
-                  <SubscriptionsListMobile subscriptions={activeSubscriptions} />
+                  <SubscriptionsListMobile subscriptions={parsedSubscriptions} />
                   <TransactionList transactions={parsedTransactions} />
                 </div>
 
