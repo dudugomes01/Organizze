@@ -47,7 +47,7 @@ const TransactionList = ({ transactions }: { transactions: Transaction[] }) => {
   };
 
   return (
-    <div className="space-y-4 mb-[100px] mt-[80px]" >
+    <div className="space-y-4 mb-[100px] mt-[35px]" >
       {Object.keys(groupedTransactions).length === 0 ? (
         <div className="text-center text-black py-10" style={{ backgroundColor: '#adff2f', borderRadius: '15px' }}>
           Não há nada cadastrado no mês selecionado!

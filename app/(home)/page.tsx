@@ -11,6 +11,8 @@ import LastTransactions from "./_components/last-transactions";
 import { canUserAddTransaction } from "../_data/can-user-add-transaction";
 import AiReportButton from "./_components/ai-report-button";
 import MobileBottomNav from './_components/MobileBottomNav';
+import ActiveSubscriptions from "./_components/active-subscriptions";
+import { getRecurringSubscriptions } from "../my-subscriptions/_actions/manage-subscription";
 
 interface HomeProps {
   searchParams: {
@@ -37,6 +39,7 @@ const Home = async ({ searchParams }: HomeProps) => {
   const dashboard = await getDashboard(month, year);
   const userCanAddTransaction = await canUserAddTransaction();
   const user = await clerkClient().users.getUser(userId);
+  const subscriptions = await getRecurringSubscriptions();
   return (
     <>
       <Navbar />
@@ -44,7 +47,7 @@ const Home = async ({ searchParams }: HomeProps) => {
         <div className="flex justify-between mx-auto sm:mx-0">
           <h1 className="hidden lg:flex text-2xl font-bold">Dashboard</h1>
           <div className="flex items-center gap-3">
-          <TimeSelect /> 
+            <TimeSelect /> 
             <div className="hidden sm:block">
               <AiReportButton
                 month={month}
@@ -77,7 +80,10 @@ const Home = async ({ searchParams }: HomeProps) => {
               </div>
             </div>
           </div>
-          <LastTransactions lastTransactions={dashboard.lastTransactions} />
+          <div className="flex flex-col gap-6">
+            <LastTransactions lastTransactions={dashboard.lastTransactions} />
+            <ActiveSubscriptions subscriptions={subscriptions} />
+          </div>
         </div>
         
         {/* <SejaPremiumMobile className="px-4 pb-6 -mt-6 mb-[70px]" /> */}

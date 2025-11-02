@@ -17,6 +17,7 @@ import { Card, CardContent, CardHeader } from "../_components/ui/card";
 // import { Separator } from "../_components/ui/separator";
 import { TrendingUp, TrendingDown, Calendar } from "lucide-react";
 import SejaPremiumMobile from "../_components/seja-premium-mobile";
+import SubscriptionsListMobile from "./_components/subscriptions-list-mobile";
 
 
 type Props = {
@@ -57,6 +58,17 @@ const TransactionsPage = async ({ searchParams }: Props) => {
   const userCanAddTransaction = await canUserAddTransaction();
   const parsedTransactions = JSON.parse(JSON.stringify(transactions));
 
+  // Buscar assinaturas ativas
+  const activeSubscriptions = await db.recurringSubscription.findMany({
+    where: {
+      userId,
+      isActive: true,
+    },
+    orderBy: {
+      name: "asc",
+    },
+  });
+
   // Cálculos para o resumo
   const totalIncome = parsedTransactions
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -70,7 +82,14 @@ const TransactionsPage = async ({ searchParams }: Props) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .reduce((sum: number, t: any) => sum + Number(t.amount), 0);
   
-  const balance = totalIncome - totalExpenses;
+  // Adicionar o valor das assinaturas ativas às despesas
+  const subscriptionsTotal = activeSubscriptions.reduce(
+    (sum, sub) => sum + Number(sub.amount),
+    0
+  );
+  
+  const totalExpensesWithSubscriptions = totalExpenses + subscriptionsTotal;
+  const balance = totalIncome - totalExpensesWithSubscriptions;
   const transactionCount = parsedTransactions.length;
 
   const monthName = format(startDate, "MMMM 'de' yyyy", { locale: ptBR });
@@ -133,7 +152,7 @@ const TransactionsPage = async ({ searchParams }: Props) => {
                       {new Intl.NumberFormat('pt-BR', {
                         style: 'currency',
                         currency: 'BRL'
-                      }).format(totalExpenses)}
+                      }).format(totalExpensesWithSubscriptions)}
                     </p>
                   </div>
                   <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-full">
@@ -230,6 +249,7 @@ const TransactionsPage = async ({ searchParams }: Props) => {
               <ScrollArea className="h-full">
                 {/* Mobile View */}
                 <div className="sm:hidden">
+                  <SubscriptionsListMobile subscriptions={activeSubscriptions} />
                   <TransactionList transactions={parsedTransactions} />
                 </div>
 

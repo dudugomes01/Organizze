@@ -24,7 +24,7 @@ const SubscriptionPage = async () => {
         <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#4cff00] via-[#00ffd0] to-[#00bfff] drop-shadow-lg mb-8 tracking-tight">
           Assinatura
         </h1>
-  <div className="flex flex-col sm:flex-row gap-6 w-full max-w-5xl justify-center items-stretch mb-32 px-4 sm:px-0">
+  <div className="flex flex-col sm:flex-row gap-6 w-full max-w-5xl justify-center items-stretch mb-10 px-4 sm:px-0">
           {/* Plano Básico */}
           <Card className="w-full sm:w-[360px] h-[472px] mx-auto rounded-3xl shadow-xl bg-[#181c1f] bg-opacity-90 border border-white/20 hover:scale-[1.03] transition-transform duration-300">
             <CardHeader className="py-8 bg-gradient-to-b from-[#232526]/80 to-[#2f2f2f]/80 rounded-3xl border-b border-white/10">
@@ -60,7 +60,7 @@ const SubscriptionPage = async () => {
           </Card>
 
           {/* Plano Premium */}
-          <Card className="w-full sm:w-[420px] mx-auto rounded-3xl shadow-2xl border-2 border-[#4cff00]/40 bg-gradient-to-br from-[#0b3a00]/80 via-[#1a4d00]/80 to-[#00ffd0]/10 backdrop-blur-lg relative overflow-visible hover:scale-[1.05] transition-transform duration-300 mb-40">
+          <Card className="w-full sm:w-[420px] mx-auto rounded-3xl shadow-2xl border-2 border-[#4cff00]/40 bg-gradient-to-br from-[#0b3a00]/80 via-[#1a4d00]/80 to-[#00ffd0]/10 backdrop-blur-lg relative overflow-visible hover:scale-[1.05] transition-transform duration-300">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#4cff00]/20 rounded-full blur-2xl z-0 pointer-events-none" />
             <CardHeader className="relative py-8 bg-gradient-to-b from-[#0b3a00]/80 to-[#1a4d00]/80 rounded-3xl border-b border-white/10 z-10">
               {hasPremiumPlan && (
