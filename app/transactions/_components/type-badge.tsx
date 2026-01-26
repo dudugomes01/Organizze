@@ -1,6 +1,13 @@
 import { Badge } from "@/app/_components/ui/badge";
-import { Transaction, TransactionType } from "@prisma/client";
+import { Transaction } from "@prisma/client";
 import { CircleIcon } from "lucide-react";
+
+// Enum local para evitar importar do Prisma Client no lado do cliente
+const TransactionType = {
+  DEPOSIT: "DEPOSIT",
+  EXPENSE: "EXPENSE",
+  INVESTMENT: "INVESTMENT",
+} as const;
 
 interface TransactionTypeBadgeProps {
   transaction: Transaction;

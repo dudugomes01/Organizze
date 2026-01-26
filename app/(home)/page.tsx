@@ -26,9 +26,12 @@ const Home = async ({ searchParams }: HomeProps) => {
   if (!userId) {
     redirect("/login");
   }
-  const { month, year } = searchParams;
   const currentYear = new Date().getFullYear().toString();
   const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
+  
+  // Se não há parâmetros ou são inválidos, usar o mês/ano atual
+  const month = searchParams.month || currentMonth;
+  const year = searchParams.year || currentYear;
 
   const monthIsInvalid = !month || !isMatch(month, "MM");
   const yearIsInvalid = !year || !isMatch(year, "yyyy");

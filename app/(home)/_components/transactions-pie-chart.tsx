@@ -9,11 +9,17 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/app/_components/ui/chart";
-import { TransactionType } from "@prisma/client";
 import { TransactionPercentagePerType } from "@/app/_data/get-dashboard/types";
 import { PiggyBankIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import PercentageItem from "./percentage-item";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
+
+// Enum local para evitar importar do Prisma Client no lado do cliente
+const TransactionType = {
+  DEPOSIT: "DEPOSIT",
+  EXPENSE: "EXPENSE",
+  INVESTMENT: "INVESTMENT",
+} as const;
 
 const chartConfig = {
   [TransactionType.INVESTMENT]: {

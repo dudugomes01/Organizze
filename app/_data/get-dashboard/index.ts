@@ -100,13 +100,13 @@ export const getDashboard = async (month: string, year: string) => {
   const transactionsTotal = depositsTotal + investmentsTotal + expensesTotal;
 
   const typesPercentage: TransactionPercentagePerType = {
-    [TransactionType.DEPOSIT]: Math.round(
+    DEPOSIT: Math.round(
       (Number(depositsTotal || 0) / Number(transactionsTotal)) * 100,
     ),
-    [TransactionType.EXPENSE]: Math.round(
+    EXPENSE: Math.round(
       (Number(expensesTotal || 0) / Number(transactionsTotal)) * 100,
     ),
-    [TransactionType.INVESTMENT]: Math.round(
+    INVESTMENT: Math.round(
       (Number(investmentsTotal || 0) / Number(transactionsTotal)) * 100,
     ),
   };

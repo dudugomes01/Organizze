@@ -1,7 +1,10 @@
-import { TransactionCategory, TransactionType } from "@prisma/client";
+import { TransactionCategory } from "@prisma/client";
 
+// Usando strings literais em vez do enum para compatibilidade com componentes do cliente
 export type TransactionPercentagePerType = {
-  [key in TransactionType]: number;
+  DEPOSIT: number;
+  EXPENSE: number;
+  INVESTMENT: number;
 };
 
 export interface TotalExpensePerCategory {

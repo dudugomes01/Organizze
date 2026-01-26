@@ -1,8 +1,31 @@
-import {
-  TransactionCategory,
-  TransactionPaymentMethod,
-  TransactionType,
-} from "@prisma/client";
+// Enums locais para evitar importar do Prisma Client no lado do cliente
+const TransactionType = {
+  DEPOSIT: "DEPOSIT",
+  EXPENSE: "EXPENSE",
+  INVESTMENT: "INVESTMENT",
+} as const;
+
+const TransactionCategory = {
+  HOUSING: "HOUSING",
+  TRANSPORTATION: "TRANSPORTATION",
+  FOOD: "FOOD",
+  ENTERTAINMENT: "ENTERTAINMENT",
+  HEALTH: "HEALTH",
+  UTILITY: "UTILITY",
+  SALARY: "SALARY",
+  EDUCATION: "EDUCATION",
+  OTHER: "OTHER",
+} as const;
+
+const TransactionPaymentMethod = {
+  CREDIT_CARD: "CREDIT_CARD",
+  DEBIT_CARD: "DEBIT_CARD",
+  BANK_TRANSFER: "BANK_TRANSFER",
+  BANK_SLIP: "BANK_SLIP",
+  CASH: "CASH",
+  PIX: "PIX",
+  OTHER: "OTHER",
+} as const;
 
 export const TRANSACTION_PAYMENT_METHOD_ICONS = {
   [TransactionPaymentMethod.CREDIT_CARD]: "credit-card.svg",
@@ -12,7 +35,7 @@ export const TRANSACTION_PAYMENT_METHOD_ICONS = {
   [TransactionPaymentMethod.CASH]: "money.svg",
   [TransactionPaymentMethod.PIX]: "pix.svg",
   [TransactionPaymentMethod.OTHER]: "other.svg",
-};
+} as const;
 
 export const TRANSACTION_CATEGORY_LABELS = {
   EDUCATION: "Educação",

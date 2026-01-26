@@ -491,11 +491,35 @@ import {
 } from "../_constants/transactions";
 import { DatePicker } from "./ui/data.picker";
 import { z } from "zod";
-import {
-  TransactionType,
-  TransactionCategory,
-  TransactionPaymentMethod,
-} from "@prisma/client";
+// Enums locais para evitar importar do Prisma Client no lado do cliente
+const TransactionType = {
+  DEPOSIT: "DEPOSIT",
+  EXPENSE: "EXPENSE",
+  INVESTMENT: "INVESTMENT",
+} as const;
+
+const TransactionCategory = {
+  HOUSING: "HOUSING",
+  TRANSPORTATION: "TRANSPORTATION",
+  FOOD: "FOOD",
+  ENTERTAINMENT: "ENTERTAINMENT",
+  HEALTH: "HEALTH",
+  UTILITY: "UTILITY",
+  SALARY: "SALARY",
+  EDUCATION: "EDUCATION",
+  OTHER: "OTHER",
+} as const;
+
+const TransactionPaymentMethod = {
+  CREDIT_CARD: "CREDIT_CARD",
+  DEBIT_CARD: "DEBIT_CARD",
+  BANK_TRANSFER: "BANK_TRANSFER",
+  BANK_SLIP: "BANK_SLIP",
+  CASH: "CASH",
+  PIX: "PIX",
+  OTHER: "OTHER",
+} as const;
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { upsertTransaction } from "../_actions/upsert-transaction";
@@ -514,7 +538,7 @@ import {
   Edit3
 } from "lucide-react";
 
-const SUGGESTED_CATEGORIES: { [key: string]: TransactionCategory } = {
+const SUGGESTED_CATEGORIES: { [key: string]: typeof TransactionCategory[keyof typeof TransactionCategory] } = {
   posto: TransactionCategory.TRANSPORTATION,
   gasolina: TransactionCategory.TRANSPORTATION,
   burger: TransactionCategory.FOOD,
@@ -530,7 +554,7 @@ const SUGGESTED_CATEGORIES: { [key: string]: TransactionCategory } = {
   pix: TransactionCategory.OTHER,
 };
 
-function suggestCategory(memo: string): TransactionCategory {
+function suggestCategory(memo: string): typeof TransactionCategory[keyof typeof TransactionCategory] {
   const lower = memo.toLowerCase();
   for (const key in SUGGESTED_CATEGORIES) {
     if (lower.includes(key)) return SUGGESTED_CATEGORIES[key];
@@ -556,13 +580,31 @@ const formSchema = z.object({
     .positive({
       message: "O valor deve ser positivo.",
     }),
-  type: z.nativeEnum(TransactionType, {
+  type: z.enum([TransactionType.DEPOSIT, TransactionType.EXPENSE, TransactionType.INVESTMENT], {
     required_error: "O tipo é obrigatório.",
   }),
-  category: z.nativeEnum(TransactionCategory, {
+  category: z.enum([
+    TransactionCategory.HOUSING,
+    TransactionCategory.TRANSPORTATION,
+    TransactionCategory.FOOD,
+    TransactionCategory.ENTERTAINMENT,
+    TransactionCategory.HEALTH,
+    TransactionCategory.UTILITY,
+    TransactionCategory.SALARY,
+    TransactionCategory.EDUCATION,
+    TransactionCategory.OTHER,
+  ], {
     required_error: "A categoria é obrigatória.",
   }),
-  paymentMethod: z.nativeEnum(TransactionPaymentMethod, {
+  paymentMethod: z.enum([
+    TransactionPaymentMethod.CREDIT_CARD,
+    TransactionPaymentMethod.DEBIT_CARD,
+    TransactionPaymentMethod.BANK_TRANSFER,
+    TransactionPaymentMethod.BANK_SLIP,
+    TransactionPaymentMethod.CASH,
+    TransactionPaymentMethod.PIX,
+    TransactionPaymentMethod.OTHER,
+  ], {
     required_error: "O método de pagamento é obrigatório.",
   }),
   date: z.date({

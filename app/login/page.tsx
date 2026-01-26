@@ -29,7 +29,7 @@ const loginPage = async () => {
             monitorar suas movimentações, e oferecer insights personalizados,
             facilitando o controle do seu orçamento.
           </p>
-          <SignInButton>
+          <SignInButton mode="redirect" redirectUrl="/">
             <Button variant="outline">
               <LogInIcon className="mr-2" />
               Fazer Login ou criar conta
@@ -72,7 +72,7 @@ const loginPage = async () => {
             A Organizze-AI é uma plataforma de gestão financeira que utiliza IA para
             monitorar suas movimentações e oferecer insights personalizados.
           </p>
-          <SignInButton>
+          <SignInButton mode="redirect" redirectUrl="/">
             <Button variant="outline" className="w-full">
               <LogInIcon className="mr-2" />
               Fazer Login ou criar conta
