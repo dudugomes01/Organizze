@@ -908,7 +908,7 @@ const UpsertTransactionDialog = ({
                             Tipo
                           </FormLabel>
                           <Select
-                            onValueChange={(val) => field.onChange(val as TransactionType)}
+                            onValueChange={(val) => field.onChange(val as typeof TransactionType[keyof typeof TransactionType])}
                             value={field.value}
                           >
                             <FormControl>
@@ -938,7 +938,7 @@ const UpsertTransactionDialog = ({
                             Categoria
                           </FormLabel>
                           <Select
-                            onValueChange={(val) => field.onChange(val as TransactionCategory)}
+                            onValueChange={(val) => field.onChange(val as typeof TransactionCategory[keyof typeof TransactionCategory])}
                             value={field.value}
                           >
                             <FormControl>
@@ -968,7 +968,7 @@ const UpsertTransactionDialog = ({
                             Método de Pagamento
                           </FormLabel>
                           <Select
-                            onValueChange={(val) => field.onChange(val as TransactionPaymentMethod)}
+                            onValueChange={(val) => field.onChange(val as typeof TransactionPaymentMethod[keyof typeof TransactionPaymentMethod])}
                             value={field.value}
                           >
                             <FormControl>

@@ -32,6 +32,7 @@ export default function RootLayout({
         appearance={{
           baseTheme: dark,
         }}
+        // @ts-expect-error - Localization type mismatch between Clerk versions
         localization={ptBR}
       >
         <div className="flex sm:h-full flex-col">{children}</div>
