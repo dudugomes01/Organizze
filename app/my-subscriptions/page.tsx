@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import NavBar from "../_components/navBar";
 import MobileBottomNav from "../(home)/_components/MobileBottomNav";
-import { Card, CardContent, CardHeader, CardTitle } from "../_components/ui/card";
+import { Card, CardContent, CardHeader } from "../_components/ui/card";
 import CreateSubscriptionDialog from "./_components/create-subscription-dialog";
 import SubscriptionsList from "./_components/subscriptions-list";
 import { getRecurringSubscriptions } from "./_actions/manage-subscription/index";
