@@ -1,13 +1,12 @@
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader } from "../_components/ui/card";
-import { CheckIcon, XIcon } from "lucide-react";
+import { CheckIcon, XIcon, Sparkles, Zap, Infinity, Brain, FileText, Crown } from "lucide-react";
 import AcquirePlanButton from "./_components/acquire-plan-button";
 import { Badge } from "../_components/ui/badge";
 import NavBar from "../_components/navBar";
 import { getCurrentMonthTransactions } from "../_data/get-current-month-transactions";
 import MobileBottomNav from '../(home)/_components/MobileBottomNav';
-
 
 const SubscriptionPage = async () => {
   const { userId } = await auth();
@@ -17,89 +16,217 @@ const SubscriptionPage = async () => {
   const user = await clerkClient().users.getUser(userId);
   const currentMonthTransactions = await getCurrentMonthTransactions();
   const hasPremiumPlan = user.publicMetadata.subscriptionPlan == "premium";
+
+  const basicFeatures = [
+    { icon: CheckIcon, text: `Até 10 transações/mês`, highlight: `(${currentMonthTransactions}/10)`, available: true },
+    { icon: XIcon, text: "Relatórios de IA", available: false },
+    { icon: XIcon, text: "Planejamento", available: false },
+    { icon: XIcon, text: "Importação OFX", available: false },
+  ];
+
+  const premiumFeatures = [
+    { icon: Infinity, text: "Transações ilimitadas", available: true },
+    { icon: Brain, text: "Relatórios de IA", available: true },
+    { icon: Zap, text: "Planejamento", available: true },
+    { icon: FileText, text: "Importação OFX", available: true },
+  ];
+
   return (
     <>
       <NavBar />
-  <div className="min-h-screen h-full w-full bg-gradient-to-br via-[#2c5364] to-[#0b3a00] flex flex-col items-center py-8 px-4 pb-32 sm:pb-8">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#4cff00] via-[#00ffd0] to-[#00bfff] drop-shadow-lg mb-8 tracking-tight">
-          Assinatura
-        </h1>
-  <div className="flex flex-col sm:flex-row gap-6 w-full max-w-5xl justify-center items-stretch mb-10 px-4 sm:px-0">
-          {/* Plano Básico */}
-          <Card className="w-full sm:w-[360px] h-[472px] mx-auto rounded-3xl shadow-xl bg-[#181c1f] bg-opacity-90 border border-white/20 hover:scale-[1.03] transition-transform duration-300">
-            <CardHeader className="py-8 bg-gradient-to-b from-[#232526]/80 to-[#2f2f2f]/80 rounded-3xl border-b border-white/10">
-              <h2 className="text-center text-2xl font-bold text-white tracking-wide mb-2">
-                Plano Básico
-              </h2>
-              <div className="flex items-end justify-center gap-2">
-                <span className="text-3xl text-[#4cff00] font-bold">R$</span>
-                <span className="text-5xl font-extrabold text-white">0</span>
-                <span className="text-xl text-gray-300 mb-1">/mês</span>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-5 py-8 px-4">
-              <div className="flex items-center gap-3">
-                <CheckIcon className="text-[#4cff00] w-6 h-6" />
-                <p className="text-white/90 text-lg">
-                  Até 10 transações/mês <span className="ml-1 text-[#4cff00] font-bold">({currentMonthTransactions}/10)</span>
-                </p>
-              </div>
-              <div className="flex items-center gap-3 opacity-60">
-                <XIcon className="text-[#fc0000] w-6 h-6"/>
-                <p className="text-white/80 text-lg">Relatórios de IA</p>
-              </div>
-              <div className="flex items-center gap-3 opacity-60">
-                <XIcon className="text-[#fc0000] w-6 h-6"/>
-                <p className="text-white/80 text-lg">Planejamento</p>
-              </div>
-              <div className="flex items-center gap-3 opacity-60">
-                <XIcon className="text-[#fc0000] w-6 h-6"/>
-                <p className="text-white/80 text-lg">Importação OFX</p>
-              </div>
-            </CardContent>
-          </Card>
+      <div className="w-full min-h-screen bg-gradient-to-br from-[#000a1b] via-[#0a0f1f] to-[#000a1b] relative pb-32 sm:pb-8">
+        {/* Background Effects */}
+        <div className="absolute inset-0">
+          {/* Grid Pattern */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a2e_1px,transparent_1px),linear-gradient(to_bottom,#1a1a2e_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20" />
+          
+          {/* Gradient Orbs */}
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#55B02E]/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-3xl" />
+        </div>
 
-          {/* Plano Premium */}
-          <Card className="w-full sm:w-[420px] mx-auto rounded-3xl shadow-2xl border-2 border-[#4cff00]/40 bg-gradient-to-br from-[#0b3a00]/80 via-[#1a4d00]/80 to-[#00ffd0]/10 backdrop-blur-lg relative overflow-visible hover:scale-[1.05] transition-transform duration-300">
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#4cff00]/20 rounded-full blur-2xl z-0 pointer-events-none" />
-            <CardHeader className="relative py-8 bg-gradient-to-b from-[#0b3a00]/80 to-[#1a4d00]/80 rounded-3xl border-b border-white/10 z-10">
-              {hasPremiumPlan && (
-                <Badge className="absolute left-4 top-8 bg-[#4cff00]/20 text-[#4cff00] border border-[#4cff00] px-4 py-1 rounded-full text-base font-bold shadow-md">
-                  Ativo
-                </Badge>
-              )}
-              <h2 className="text-center text-2xl font-bold text-[#4cff00] tracking-wide mb-2">
-                Plano Premium
-              </h2>
-              <div className="flex items-end justify-center gap-2">
-                <span className="text-3xl text-[#4cff00] font-bold">R$</span>
-                <span className="text-6xl font-extrabold text-white drop-shadow-[0_2px_10px_#4cff00aa]">19</span>
-                <span className="text-xl text-gray-300 mb-1">/mês</span>
+        {/* Content */}
+        <div className="relative z-10 flex flex-col items-center py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-6 sm:mb-8 space-y-3 max-w-3xl mx-auto">
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <div className="relative">
+                <div className="absolute inset-0 bg-[#55B02E]/30 blur-xl rounded-lg" />
+                <div className="relative bg-gradient-to-br from-[#55B02E] to-emerald-600 p-1.5 rounded-lg">
+                  <Crown className="w-5 h-5 text-white" />
+                </div>
               </div>
-            </CardHeader>
-            <CardContent className="space-y-5 py-8 px-4 z-10">
-              <div className="flex items-center gap-3">
-                <CheckIcon className="text-[#4cff00] w-6 h-6 animate-pulse" />
-                <p className="text-white/90 text-lg font-semibold">Transações ilimitadas</p>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+                Escolha seu Plano
+              </h1>
+            </div>
+            <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
+              Selecione o plano ideal para suas necessidades financeiras. 
+              Gerencie seus gastos, invista com inteligência e tenha controle total.
+            </p>
+          </div>
+
+          {/* Plans Grid */}
+          <div className="w-full max-w-5xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-5 lg:gap-6 items-start">
+              {/* Plano Básico */}
+              <Card className="relative group w-full max-w-sm mx-auto lg:max-w-none">
+                {/* Glow Effect */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-600 to-gray-800 rounded-xl blur opacity-20 group-hover:opacity-30 transition-opacity" />
+                
+                {/* Card */}
+                <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 overflow-hidden flex flex-col">
+                  <CardHeader className="py-4 sm:py-5 bg-gradient-to-b from-gray-800/50 to-gray-900/50 border-b border-gray-800/50">
+                    <div className="text-center space-y-2">
+                      <h2 className="text-xl sm:text-2xl font-bold text-white">
+                        Plano Básico
+                      </h2>
+                      <div className="flex items-end justify-center gap-1.5">
+                        <span className="text-xl sm:text-2xl text-[#55B02E] font-bold">R$</span>
+                        <span className="text-4xl sm:text-5xl font-extrabold text-white">0</span>
+                        <span className="text-base sm:text-lg text-gray-400 mb-0.5">/mês</span>
+                      </div>
+                      <p className="text-xs text-gray-500 pt-1">Perfeito para começar</p>
+                    </div>
+                  </CardHeader>
+                  
+                  <CardContent className="flex-1 flex flex-col py-4 sm:py-5 px-4 sm:px-5 space-y-3">
+                    {basicFeatures.map((feature, index) => {
+                      const Icon = feature.icon;
+                      return (
+                        <div
+                          key={index}
+                          className={`flex items-start gap-2.5 p-2.5 rounded-lg transition-colors ${
+                            feature.available
+                              ? "bg-gray-800/30"
+                              : "bg-gray-800/20"
+                          }`}
+                        >
+                          <div className={`p-1.5 rounded-lg flex-shrink-0 ${
+                            feature.available
+                              ? "bg-[#55B02E]/20 text-[#55B02E]"
+                              : "bg-red-500/40 text-red-400"
+                          }`}>
+                            <Icon className="w-4 h-4 sm:w-4 sm:h-4" />
+                          </div>
+                          <p className="text-white/90 text-sm flex-1">
+                            {feature.text}
+                            {feature.highlight && (
+                              <span className="ml-2 text-[#55B02E] font-semibold">
+                                {feature.highlight}
+                              </span>
+                            )}
+                          </p>
+                        </div>
+                      );
+                    })}
+                    
+                    <div className="mt-auto pt-4">
+                      <div className="w-full h-10 bg-gray-800/50 rounded-lg flex items-center justify-center border border-gray-700/50">
+                        <span className="text-gray-400 text-xs sm:text-sm font-medium">
+                          Plano Atual
+                        </span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </div>
+              </Card>
+
+              {/* Plano Premium */}
+              <Card className="relative group w-full max-w-sm mx-auto lg:max-w-none">
+                {/* Premium Glow Effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#55B02E] via-emerald-500 to-[#55B02E] rounded-xl blur opacity-30 group-hover:opacity-40 animate-pulse" />
+                
+                {/* Card */}
+                <div className="relative bg-gradient-to-br from-gray-900/90 via-emerald-950/20 to-gray-900/90 backdrop-blur-xl rounded-xl border-2 border-[#55B02E]/40 overflow-hidden flex flex-col shadow-2xl shadow-[#55B02E]/10">
+                  {/* Premium Badge */}
+                  {hasPremiumPlan && (
+                    <div className="absolute top-3 right-3 z-20">
+                      <Badge className="bg-[#55B02E]/20 text-[#55B02E] border border-[#55B02E] px-2.5 py-0.5 rounded-full text-xs font-bold shadow-lg shadow-[#55B02E]/30">
+                        <Sparkles className="w-3 h-3 mr-1 inline" />
+                        Ativo
+                      </Badge>
+                    </div>
+                  )}
+
+                  {/* Floating Orb */}
+                  <div className="absolute -top-16 -right-16 w-32 h-32 bg-[#55B02E]/20 rounded-full blur-3xl animate-pulse pointer-events-none" />
+
+                  <CardHeader className="relative py-4 sm:py-5 bg-gradient-to-b from-emerald-950/30 to-gray-900/50 border-b border-[#55B02E]/20 z-10">
+                    <div className="text-center space-y-2">
+                      <div className="flex items-center justify-center gap-2 mb-1">
+                        <Crown className="w-4 h-4 sm:w-5 sm:h-5 text-[#55B02E]" />
+                        <h2 className="text-xl sm:text-2xl font-bold text-[#55B02E]">
+                          Plano Premium
+                        </h2>
+                      </div>
+                      <div className="flex items-end justify-center gap-1.5">
+                        <span className="text-xl sm:text-2xl text-[#55B02E] font-bold">R$</span>
+                        <span className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-[0_2px_20px_#55B02Eaa]">
+                          19
+                        </span>
+                        <span className="text-base sm:text-lg text-gray-400 mb-0.5">/mês</span>
+                      </div>
+                      <p className="text-xs text-gray-400 pt-1">Máximo de recursos</p>
+                    </div>
+                  </CardHeader>
+                  
+                  <CardContent className="relative flex-1 flex flex-col py-4 sm:py-5 px-4 sm:px-5 space-y-3 z-10">
+                    {premiumFeatures.map((feature, index) => {
+                      const Icon = feature.icon;
+                      return (
+                        <div
+                          key={index}
+                          className="flex items-start gap-2.5 p-2.5 rounded-lg bg-emerald-950/20 border border-[#55B02E]/10 group/feature hover:bg-emerald-950/30 transition-all"
+                        >
+                          <div className="p-1.5 rounded-lg bg-[#55B02E]/30 text-[#55B02E] group-hover/feature:bg-[#55B02E]/40 transition-colors flex-shrink-0">
+                            <Icon className="w-4 h-4 animate-pulse" />
+                          </div>
+                          <p className="text-white font-semibold text-sm flex-1">
+                            {feature.text}
+                          </p>
+                        </div>
+                      );
+                    })}
+                    
+                    <div className="mt-auto pt-4">
+                      <AcquirePlanButton />
+                    </div>
+                  </CardContent>
+
+                  {/* Bottom Accent */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#55B02E]/60 to-transparent" />
+                </div>
+              </Card>
+            </div>
+
+            {/* Comparison Section */}
+            <div className="mt-8 sm:mt-10 max-w-4xl mx-auto">
+              <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800/50 p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-4 text-center">
+                  Por que escolher o Premium?
+                </h3>
+                <div className="grid sm:grid-cols-3 gap-3 sm:gap-4">
+                  <div className="text-center p-4 rounded-xl bg-gray-800/30 border border-gray-700/50">
+                    <Infinity className="w-8 h-8 text-[#55B02E] mx-auto mb-2" />
+                    <p className="text-white font-semibold text-sm mb-1">Sem Limites</p>
+                    <p className="text-gray-400 text-xs">Transações ilimitadas</p>
+                  </div>
+                  <div className="text-center p-4 rounded-xl bg-gray-800/30 border border-gray-700/50">
+                    <Brain className="w-8 h-8 text-[#55B02E] mx-auto mb-2" />
+                    <p className="text-white font-semibold text-sm mb-1">IA Avançada</p>
+                    <p className="text-gray-400 text-xs">Insights inteligentes</p>
+                  </div>
+                  <div className="text-center p-4 rounded-xl bg-gray-800/30 border border-gray-700/50">
+                    <FileText className="w-8 h-8 text-[#55B02E] mx-auto mb-2" />
+                    <p className="text-white font-semibold text-sm mb-1">Importação</p>
+                    <p className="text-gray-400 text-xs">OFX automático</p>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-3">
-                <CheckIcon className="text-[#4cff00] w-6 h-6 animate-pulse" />
-                <p className="text-white/90 text-lg font-semibold">Relatórios de IA</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckIcon className="text-[#4cff00] w-6 h-6 animate-pulse" />
-                <p className="text-white/90 text-lg font-semibold">Planejamento</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckIcon className="text-[#4cff00] w-6 h-6 animate-pulse" />
-                <p className="text-white/90 text-lg font-semibold">Importação OFX</p>
-              </div>
-              <div className="flex justify-center mt-8">
-                <AcquirePlanButton />
-              </div>
-            </CardContent>
-            <div className="absolute bottom-0 left-0 h-2 bg-gradient-to-r from-[#4cff00]/60 via-[#00ffd0]/40 to-transparent rounded-b-3xl" style={{ width: '290px', marginLeft: '5px' }} />
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
       <MobileBottomNav />

@@ -24,9 +24,13 @@ const AcquirePlanButton = () => {
   const hasPremiumPlan = user?.publicMetadata.subscriptionPlan == "premium";
   if (hasPremiumPlan) {
     return (
-      <Button className="w-full rounded-full font-bold" variant="link">
+      <Button 
+        className="w-full h-12 bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white font-semibold text-base rounded-xl border border-gray-600 transition-all duration-300"
+        variant="outline"
+      >
         <Link
           href={`${process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL as string}?prefilled_email=${user.emailAddresses[0].emailAddress}`}
+          className="w-full"
         >
           Gerenciar plano
         </Link>
@@ -35,10 +39,10 @@ const AcquirePlanButton = () => {
   }
   return (
     <Button
-      className="w-full rounded-full font-bold"
+      className="w-full h-12 bg-gradient-to-r from-[#55B02E] to-emerald-600 hover:from-emerald-600 hover:to-[#55B02E] text-white font-semibold text-base rounded-xl shadow-lg shadow-[#55B02E]/20 hover:shadow-[#55B02E]/40 transition-all duration-300 transform hover:scale-[1.02]"
       onClick={handleAcquirePlanClick}
     >
-      Adquirir plano
+      Adquirir plano Premium
     </Button>
   );
 };
