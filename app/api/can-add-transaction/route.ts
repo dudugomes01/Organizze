@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const canAdd = await canUserAddTransaction();
     return NextResponse.json({ canAddTransaction: canAdd });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ canAddTransaction: false }, { status: 401 });
   }
 }

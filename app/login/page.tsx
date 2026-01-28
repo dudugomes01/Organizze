@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Button } from "../_components/ui/button";
-import { LogInIcon, TrendingUp, FileText, PieChart, Shield, Sparkles } from "lucide-react";
+import { LogInIcon, TrendingUp, FileText, PieChart, Shield } from "lucide-react";
 import { SignInButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";

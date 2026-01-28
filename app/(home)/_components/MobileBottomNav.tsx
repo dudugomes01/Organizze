@@ -23,7 +23,7 @@ const MobileBottomNav = () => {
       const response = await fetch("/api/can-add-transaction");
       const data = await response.json();
       setUserCanAddTransaction(data.canAddTransaction ?? false);
-    } catch (error) {
+    } catch {
       setUserCanAddTransaction(false);
     } finally {
       setIsLoading(false);

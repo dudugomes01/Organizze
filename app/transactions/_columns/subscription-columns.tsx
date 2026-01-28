@@ -42,11 +42,12 @@ export const subscriptionColumns: ColumnDef<RecurringSubscription>[] = [
   {
     accessorKey: "isActive",
     header: "Status",
-    cell: ({ row }) => (
+    cell: () => (
       <Badge className="bg-green-500/10 text-green-400 border-green-500/20 hover:bg-green-500/10 cursor-default">
         Ativa
       </Badge>
     ),
   },
 ];
+
 
