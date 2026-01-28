@@ -18,6 +18,9 @@ model Transaction {
   createdAt     DateTime                 @default(now())
   updatedAt     DateTime                 @updatedAt
   userId        String
+
+  @@index([userId, date])
+  @@index([userId, type, date])
 }
 
 model InvestmentCategory {
@@ -75,6 +78,7 @@ model RecurringSubscription {
   updatedAt     DateTime                 @updatedAt
 
   @@unique([name, userId])
+  @@index([userId, isActive])
 }
 
 enum TransactionType {

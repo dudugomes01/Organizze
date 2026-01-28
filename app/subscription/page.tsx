@@ -34,44 +34,44 @@ const SubscriptionPage = async () => {
   return (
     <>
       <NavBar />
-      <div className="w-full min-h-screen bg-gradient-to-br from-[#000a1b] via-[#0a0f1f] to-[#000a1b] relative pb-32 sm:pb-8">
+      <div className="w-full min-h-screen bg-gradient-to-br from-[#000a1b] via-[#0a0f1f] to-[#000a1b] relative pb-32 sm:pb-8 overflow-x-hidden">
         {/* Background Effects */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 overflow-hidden">
           {/* Grid Pattern */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a2e_1px,transparent_1px),linear-gradient(to_bottom,#1a1a2e_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20" />
           
           {/* Gradient Orbs */}
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#55B02E]/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse delay-1000" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-3xl" />
+          <div className="absolute top-0 left-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-[#55B02E]/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-0 right-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] bg-blue-600/5 rounded-full blur-3xl" />
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col items-center py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 flex flex-col items-center py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8 w-full max-w-full">
           {/* Header */}
-          <div className="text-center mb-6 sm:mb-8 space-y-3 max-w-3xl mx-auto">
-            <div className="flex items-center justify-center gap-3 mb-2">
-              <div className="relative">
+          <div className="text-center mb-6 sm:mb-8 space-y-3 max-w-3xl mx-auto w-full px-2">
+            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 flex-wrap">
+              <div className="relative flex-shrink-0">
                 <div className="absolute inset-0 bg-[#55B02E]/30 blur-xl rounded-lg" />
                 <div className="relative bg-gradient-to-br from-[#55B02E] to-emerald-600 p-1.5 rounded-lg">
-                  <Crown className="w-5 h-5 text-white" />
+                  <Crown className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-white break-words">
                 Escolha seu Plano
               </h1>
             </div>
-            <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
+            <p className="text-gray-400 text-xs sm:text-sm lg:text-base max-w-2xl mx-auto px-2">
               Selecione o plano ideal para suas necessidades financeiras. 
               Gerencie seus gastos, invista com inteligência e tenha controle total.
             </p>
           </div>
 
           {/* Plans Grid */}
-          <div className="w-full max-w-5xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-5 lg:gap-6 items-start">
+          <div className="w-full max-w-5xl mx-auto px-2 sm:px-0">
+            <div className="grid lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 items-start w-full">
               {/* Plano Básico */}
-              <Card className="relative group w-full max-w-sm mx-auto lg:max-w-none">
+              <Card className="relative group w-full max-w-full sm:max-w-sm mx-auto lg:max-w-none">
                 {/* Glow Effect */}
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-600 to-gray-800 rounded-xl blur opacity-20 group-hover:opacity-30 transition-opacity" />
                 
@@ -134,7 +134,7 @@ const SubscriptionPage = async () => {
               </Card>
 
               {/* Plano Premium */}
-              <Card className="relative group w-full max-w-sm mx-auto lg:max-w-none">
+              <Card className="relative group w-full max-w-full sm:max-w-sm mx-auto lg:max-w-none">
                 {/* Premium Glow Effect */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-[#55B02E] via-emerald-500 to-[#55B02E] rounded-xl blur opacity-30 group-hover:opacity-40 animate-pulse" />
                 
@@ -202,8 +202,8 @@ const SubscriptionPage = async () => {
             </div>
 
             {/* Comparison Section */}
-            <div className="mt-8 sm:mt-10 max-w-4xl mx-auto">
-              <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800/50 p-4 sm:p-6">
+            <div className="mt-8 sm:mt-10 max-w-4xl mx-auto w-full px-2 sm:px-0">
+              <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800/50 p-4 sm:p-6 w-full overflow-hidden">
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-4 text-center">
                   Por que escolher o Premium?
                 </h3>

@@ -39,10 +39,13 @@ const Home = async ({ searchParams }: HomeProps) => {
   if (monthIsInvalid || yearIsInvalid) {
     redirect(`?month=${currentMonth}&year=${currentYear}`);
   }
-  const dashboard = await getDashboard(month, year);
-  const userCanAddTransaction = await canUserAddTransaction();
-  const user = await clerkClient().users.getUser(userId);
-  const subscriptions = await getRecurringSubscriptions();
+  // Paralelizar todas as chamadas assíncronas
+  const [dashboard, userCanAddTransaction, user, subscriptions] = await Promise.all([
+    getDashboard(month, year),
+    canUserAddTransaction(),
+    clerkClient().users.getUser(userId),
+    getRecurringSubscriptions(),
+  ]);
   return (
     <>
       <Navbar />

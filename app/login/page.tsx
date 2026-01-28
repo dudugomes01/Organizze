@@ -55,30 +55,30 @@ const loginPage = async () => {
             <div className="space-y-8 lg:space-y-12">
               {/* Logo */}
               <div className="flex items-center gap-3">
-                <div className="relative">
+                {/* <div className="relative">
                   <div className="absolute inset-0 bg-[#55B02E]/30 blur-xl rounded-lg" />
                   <div className="relative bg-gradient-to-br from-[#55B02E] to-emerald-600 p-2 rounded-lg">
                     <Sparkles className="w-6 h-6 text-white" />
                   </div>
-                </div>
+                </div> */}
                 <Image
-                  src={"/logo.svg"}
+                  src={"/atlas-logo.png"}
                   width={150}
                   height={34}
-                  className="dark:invert"
-                  alt="Organizze AI Logo"
+                  // className="dark:invert"
+                  alt="Atlas AI Logo"
                 />
               </div>
 
               {/* Headline */}
               <div className="space-y-4">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
                   Controle Financeiro
-                  <span className="block bg-gradient-to-r from-[#55B02E] to-emerald-400 bg-clip-text text-transparent">
+                  <span className="relative z-10 block bg-gradient-to-r from-[#55B02E] to-emerald-400 bg-clip-text text-transparent">
                     Inteligente
                   </span>
                 </h1>
-                <p className="text-lg sm:text-xl text-gray-400 leading-relaxed max-w-xl">
+                <p className="relative z-0 text-lg sm:text-xl text-gray-400 leading-relaxed max-w-xl">
                   Gerencie suas finanças com inteligência artificial. 
                   Acompanhe gastos, organize investimentos e importe transações bancárias automaticamente.
                 </p>

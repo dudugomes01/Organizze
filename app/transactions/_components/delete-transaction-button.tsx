@@ -25,6 +25,8 @@ import {
       try {
         await deleteTransaction({ transactionId });
         toast.success("Transação deletada com sucesso!");
+        // Disparar evento para atualizar o MobileBottomNav
+        window.dispatchEvent(new CustomEvent("transaction-updated"));
       } catch (error) {
         console.error(error);
         toast.error("Ocorreu um erro ao deletar a transação.");

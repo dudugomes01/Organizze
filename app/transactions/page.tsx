@@ -1,6 +1,7 @@
 import { db } from "../_lib/prisma";
 import { DataTable } from "../_components/ui/data-table";
 import { transactionColumns } from "./_columns";
+import { subscriptionColumns } from "./_columns/subscription-columns";
 import AddTransactionButtonWrapper from "../_components/AddTransactionButtonWrapper";
 import Navbar from "../_components/navBar";
 import { auth } from "@clerk/nextjs/server";
@@ -15,7 +16,7 @@ import MonthSelector from "./MonthSelector";
 import { Card, CardContent, CardHeader } from "../_components/ui/card";
 // import { Badge } from "../_components/ui/badge";
 // import { Separator } from "../_components/ui/separator";
-import { TrendingUp, TrendingDown, Calendar } from "lucide-react";
+import { TrendingUp, TrendingDown, Calendar, Repeat } from "lucide-react";
 import SejaPremiumMobile from "../_components/seja-premium-mobile";
 import SubscriptionsListMobile from "./_components/subscriptions-list-mobile";
 
@@ -42,37 +43,38 @@ const TransactionsPage = async ({ searchParams }: Props) => {
   const startDate = startOfMonth(new Date(Number(year), Number(month) - 1));
   const endDate = endOfMonth(startDate);
 
-  const transactions = await db.transaction.findMany({
-    where: {
-      userId,
-      date: {
-        gte: startDate,
-        lte: endDate,
+  // Paralelizar queries ao banco de dados
+  const [transactions, userCanAddTransaction, activeSubscriptions] = await Promise.all([
+    db.transaction.findMany({
+      where: {
+        userId,
+        date: {
+          gte: startDate,
+          lte: endDate,
+        },
       },
-    },
-    orderBy: {
-      date: "desc",
-    },
-  });
+      orderBy: {
+        date: "desc",
+      },
+    }),
+    canUserAddTransaction(),
+    db.recurringSubscription.findMany({
+      where: {
+        userId,
+        isActive: true,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    }),
+  ]);
 
-  const userCanAddTransaction = await canUserAddTransaction();
   const parsedTransactions = JSON.parse(JSON.stringify(transactions));
-
-  // Buscar assinaturas ativas
-  const activeSubscriptions = await db.recurringSubscription.findMany({
-    where: {
-      userId,
-      isActive: true,
-    },
-    orderBy: {
-      name: "asc",
-    },
-  });
 
   // Cálculos para o resumo
   const totalIncome = parsedTransactions
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((t: any) => t.type === "INCOME")
+    .filter((t: any) => t.type === "DEPOSIT")
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .reduce((sum: number, t: any) => sum + Number(t.amount), 0);
   
@@ -207,25 +209,14 @@ const TransactionsPage = async ({ searchParams }: Props) => {
         {/* Barra de Ações */}
         <Card className="border-0 shadow-lg">
           <CardHeader className="pb-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ marginBottom: '-50px' }}>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ marginBottom: '0px' }}>
               <div className="flex items-center gap-2">
               <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Histórico de Transações</h2>
               
               </div>
             </div>
           </CardHeader>
-          
-          {/* <CardContent className="pt-0">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  placeholder="Buscar transações..."
-                  className="pl-10"
-                />
-              </div>
-            </div>
-          </CardContent> */}
+    
         </Card>
 
         {/* Tabela de Transações */}
@@ -264,6 +255,40 @@ const TransactionsPage = async ({ searchParams }: Props) => {
             )}
           </CardContent>
         </Card>
+
+        {/* Tabela de Assinaturas Ativas */}
+        {activeSubscriptions.length > 0 && (
+          <>
+            <Card className="border-0 shadow-lg mt-6">
+              <CardHeader className="pb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ marginBottom: '0px' }}>
+                  <div className="flex items-center gap-2">
+                    <Repeat className="w-5 h-5 text-purple-600" />
+                    <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                      Assinaturas Ativas
+                    </h2>
+                  </div>
+                </div>
+              </CardHeader>
+            </Card>
+
+            <Card className="border-0 shadow-lg">
+              <CardContent className="p-0">
+                <ScrollArea className="h-full">
+                  <div className="hidden sm:block">
+                    <DataTable
+                      columns={subscriptionColumns}
+                      data={activeSubscriptions}
+                    />
+                  </div>
+                  <div className="sm:hidden">
+                    <SubscriptionsListMobile subscriptions={activeSubscriptions} />
+                  </div>
+                </ScrollArea>
+              </CardContent>
+            </Card>
+          </>
+        )}
 
         {/* Rodapé com Estatísticas Adicionais */}
         {/* {transactionCount > 0 && (

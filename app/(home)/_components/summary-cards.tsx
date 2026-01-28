@@ -27,19 +27,19 @@ const SummaryCard = ({
 }: SummaryCardProps) => {
   return (
     <div
-      className={`rounded-xl p-4 bg-card border shadow-sm ${
+      className={`rounded-xl p-4 bg-[#000f29] border border-gray-800 shadow-sm ${
         size === "large" ? "p-6" : "p-4"
       } ${className}`}
     >
       <div className="flex items-center gap-2">
-        <div className="rounded-full bg-primary/10 p-2 text-primary">
+        <div className="rounded-full bg-primary/10 p-2 text-primary flex-shrink-0">
           {icon}
         </div>
-        <span className="text-sm text-muted-foreground">{title}</span>
+        <span className="text-sm text-muted-foreground font-medium">{title}</span>
       </div>
 
       <div className="mt-4 flex items-center gap-2">
-        <span className={`${size === "large" ? "text-2xl" : "text-lg"} font-bold`}>
+        <span className={`${size === "large" ? "text-2xl" : "text-lg"} font-bold text-white`}>
           {new Intl.NumberFormat("pt-BR", {
             style: "currency",
             currency: "BRL",

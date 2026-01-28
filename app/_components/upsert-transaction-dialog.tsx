@@ -646,6 +646,8 @@ const UpsertTransactionDialog = ({
       setIsOpen(false);
       form.reset();
       setStep('form');
+      // Disparar evento para atualizar o MobileBottomNav
+      window.dispatchEvent(new CustomEvent("transaction-updated"));
     } catch (error) {
       console.error(error);
     } finally {
@@ -819,7 +821,7 @@ const UpsertTransactionDialog = ({
           </div>
         </DialogHeader>
 
-        <div className="overflow-y-auto max-h-[calc(90vh-200px)] py-6">
+        <div className="overflow-y-auto max-h-[calc(90vh-200px)] py-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {/* Manual Form */}
           {step === 'form' && (
             <div className="space-y-6">
@@ -1086,7 +1088,7 @@ const UpsertTransactionDialog = ({
                 </h4>
               </div>
               
-              <div className="max-h-60 overflow-y-auto">
+              <div className="max-h-60 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 {importPreview.map((transaction, index) => (
                 <div 
                   key={index} 

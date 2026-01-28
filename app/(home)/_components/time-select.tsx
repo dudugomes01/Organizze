@@ -140,25 +140,25 @@ const TimeSelect = () => {
                          currentMonth.value.year === currentDate.year;
 
   return (
-    <div className="w-full max-w-full sm:max-w-3xl mx-auto px-4 !p-0">
-      <div className="bg-gradient-to-r from-gray-800 via-gray-800 to-gray-900 rounded-2xl p-4 sm:p-5 shadow-xl border border-gray-700/50 backdrop-blur-sm">
-        <div className="flex items-center justify-between gap-3 sm:gap-4">
+    <div className="w-full max-w-full sm:max-w-xl mx-auto px-4 !p-0">
+      <div className="bg-gradient-to-r from-gray-800 via-gray-800 to-gray-900 rounded-xl p-3 sm:p-3.5 shadow-xl border border-gray-700/50 backdrop-blur-sm">
+        <div className="flex items-center justify-between gap-2 sm:gap-3">
           {/* Botão Anterior */}
           <button
             onClick={() => handleMonthChange('prev')}
             disabled={currentIndex === 0}
-            className="p-2.5 sm:p-3 rounded-xl bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-gray-700/50 disabled:hover:text-gray-300 active:scale-95"
+            className="p-1.5 sm:p-2 rounded-lg bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-gray-700/50 disabled:hover:text-gray-300 active:scale-95"
             aria-label="Mês anterior"
           >
-            <ChevronLeft size={22} className="sm:w-6 sm:h-6" />
+            <ChevronLeft size={16} className="sm:w-4 sm:h-4" />
           </button>
           
           {/* Área Central - Meses */}
-          <div className="flex items-center gap-2 sm:gap-3 flex-1 justify-center">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-1 justify-center">
             {prevMonth && (
               <button
                 onClick={() => handleMonthSelect(prevMonth)}
-                className="hidden sm:block px-3 py-1.5 rounded-lg text-xs sm:text-sm text-gray-400 hover:text-white hover:bg-gray-700/50 transition-all duration-200 font-medium active:scale-95"
+                className="hidden sm:block px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-700/50 transition-all duration-200 active:scale-95"
               >
                 {prevMonth.label}
               </button>
@@ -166,25 +166,25 @@ const TimeSelect = () => {
             
             {/* Mês Atual */}
             <div className="relative group">
-              <div className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 ${
+              <div className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all duration-300 ${
                 isCurrentMonth 
                   ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/30 scale-105' 
                   : 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/30'
               }`}>
-                <div className="flex items-center gap-2">
-                  <Calendar size={16} className="sm:w-5 sm:h-5" />
+                <div className="flex items-center gap-1.5">
+                  <Calendar size={14} className="sm:w-4 sm:h-4" />
                   <span className="capitalize">{currentMonth.fullLabel}</span>
                 </div>
               </div>
               {isCurrentMonth && (
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse border-2 border-gray-900"></div>
+                <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse border-2 border-gray-900"></div>
               )}
             </div>
             
             {nextMonth && (
               <button
                 onClick={() => handleMonthSelect(nextMonth)}
-                className="hidden sm:block px-3 py-1.5 rounded-lg text-xs sm:text-sm text-gray-400 hover:text-white hover:bg-gray-700/50 transition-all duration-200 font-medium active:scale-95"
+                className="hidden sm:block px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-700/50 transition-all duration-200 active:scale-95"
               >
                 {nextMonth.label}
               </button>
@@ -195,10 +195,10 @@ const TimeSelect = () => {
           <button
             onClick={() => handleMonthChange('next')}
             disabled={currentIndex === MONTHS.length - 1}
-            className="p-2.5 sm:p-3 rounded-xl bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-gray-700/50 disabled:hover:text-gray-300 active:scale-95"
+            className="p-1.5 sm:p-2 rounded-lg bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-gray-700/50 disabled:hover:text-gray-300 active:scale-95"
             aria-label="Próximo mês"
           >
-            <ChevronRight size={22} className="sm:w-6 sm:h-6" />
+            <ChevronRight size={16} className="sm:w-4 sm:h-4" />
           </button>
         </div>
       </div>

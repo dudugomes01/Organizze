@@ -67,8 +67,8 @@ const TransactionsPieChart = ({
     },
   ];
   return (
-    <ScrollArea className="rounded-md">
-      <Card className="transactions-pie-chart flex flex-col p-4">
+    <Card className="rounded-xl border bg-[#000f29] shadow-sm flex flex-col p-4">
+      <ScrollArea className="flex-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <CardContent className="flex-1 pb-0">
           <ChartContainer
             config={chartConfig}
@@ -106,8 +106,8 @@ const TransactionsPieChart = ({
             />
           </div>
         </CardContent>
-      </Card>
-    </ScrollArea>
+      </ScrollArea>
+    </Card>
   );
 };
 
