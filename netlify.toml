@@ -1,3 +1,14 @@
 [build]
   command = "npx prisma generate && npm run build"
   publish = ".next"
+
+# Configuração para ignorar variáveis públicas no scanner de secrets
+# Essas são variáveis NEXT_PUBLIC_* que devem estar no bundle do cliente
+[context.production.environment]
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL"
+
+[context.deploy-preview.environment]
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL"
+
+[context.branch-deploy.environment]
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL"
