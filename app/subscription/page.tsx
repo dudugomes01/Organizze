@@ -131,13 +131,15 @@ const SubscriptionPage = async () => {
                       );
                     })}
                     
-                    <div className="mt-auto pt-4">
-                      <div className="w-full h-10 bg-gray-800/50 rounded-lg flex items-center justify-center border border-gray-700/50">
-                        <span className="text-gray-400 text-xs sm:text-sm font-medium">
-                          Plano Atual
-                        </span>
+                    {!hasPremiumPlan && (
+                      <div className="mt-auto pt-4">
+                        <div className="w-full h-10 bg-gray-800/50 rounded-lg flex items-center justify-center border border-gray-700/50">
+                          <span className="text-gray-400 text-xs sm:text-sm font-medium">
+                            Plano Atual
+                          </span>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </CardContent>
                 </div>
               </Card>
@@ -152,7 +154,7 @@ const SubscriptionPage = async () => {
                   {/* Premium Badge */}
                   {hasPremiumPlan && (
                     <div className="absolute top-3 right-3 z-20">
-                      <Badge className="bg-[#55B02E]/20 text-[#55B02E] border border-[#55B02E] px-2.5 py-0.5 rounded-full text-xs font-bold shadow-lg shadow-[#55B02E]/30">
+                      <Badge className="bg-[#55B02E]/20 hover:bg-[#55B02E]/20 text-white border border-[#55B02E] px-2.5 py-0.5 rounded-full text-xs font-bold shadow-lg shadow-[#55B02E]/30 pointer-events-none cursor-default">
                         <Sparkles className="w-3 h-3 mr-1 inline" />
                         Ativo
                       </Badge>
