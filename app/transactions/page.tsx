@@ -4,7 +4,7 @@ import { transactionColumns } from "./_columns";
 import { subscriptionColumns } from "./_columns/subscription-columns";
 import AddTransactionButtonWrapper from "../_components/AddTransactionButtonWrapper";
 import Navbar from "../_components/navBar";
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { ScrollArea } from "../_components/ui/scroll-area";
 import { canUserAddTransaction } from "../_data/can-user-add-transaction";
@@ -44,7 +44,7 @@ const TransactionsPage = async ({ searchParams }: Props) => {
   const endDate = endOfMonth(startDate);
 
   // Paralelizar queries ao banco de dados
-  const [transactions, userCanAddTransaction, activeSubscriptions] = await Promise.all([
+  const [transactions, userCanAddTransaction, activeSubscriptions, user] = await Promise.all([
     db.transaction.findMany({
       where: {
         userId,
@@ -67,7 +67,10 @@ const TransactionsPage = async ({ searchParams }: Props) => {
         name: "asc",
       },
     }),
+    clerkClient().users.getUser(userId),
   ]);
+
+  const userIsPremium = user.publicMetadata.subscriptionPlan === "premium";
 
   const parsedTransactions = JSON.parse(JSON.stringify(transactions));
 
@@ -120,7 +123,7 @@ const TransactionsPage = async ({ searchParams }: Props) => {
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <MonthSelector selectedMonth={selectedMonth} />
-              <AddTransactionButtonWrapper userCanAddTransaction={userCanAddTransaction} />
+              <AddTransactionButtonWrapper userCanAddTransaction={userCanAddTransaction} userIsPremium={userIsPremium} />
             </div>
           </div>
 
@@ -234,7 +237,10 @@ const TransactionsPage = async ({ searchParams }: Props) => {
                   Não há transações registradas para {monthName.toLowerCase()}. 
                   Comece adicionando sua primeira transação.
                 </p>
-                <AddTransactionButtonWrapper userCanAddTransaction={userCanAddTransaction} />
+                <AddTransactionButtonWrapper 
+                  userCanAddTransaction={userCanAddTransaction} 
+                  userIsPremium={userIsPremium} 
+                />
               </div>
             ) : (
               <ScrollArea className="h-full">

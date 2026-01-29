@@ -11,16 +11,18 @@ import { getInvestmentCategories } from './_actions/manage-investment-category';
 import { getAllocationsWithCategories } from './_actions/manage-allocation';
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/_components/ui/card";
 import SejaPremiumMobile from "../_components/seja-premium-mobile";
+import { canUserCreateInvestmentCategory } from "@/app/_data/can-user-create-investment-category";
 
 export default async function InvestmentPage() {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const year = String(now.getFullYear());
 
-  const [dashboard, categories, allocationsData] = await Promise.all([
+  const [dashboard, categories, allocationsData, userCanCreateCategory] = await Promise.all([
     getDashboard(month, year),
     getInvestmentCategories(),
     getAllocationsWithCategories(),
+    canUserCreateInvestmentCategory(),
   ]);
 
   const { allocations, totalAmount: totalAllocated } = allocationsData;
@@ -30,8 +32,8 @@ export default async function InvestmentPage() {
       <div className="hidden lg:block">
         <Navbar />
       </div>
-      <div className="min-h-screen bg-gradient-to-b from-[#0b0014] via-[#1a0033] to-[#0b0014]">
-        <main className="max-w-6xl mx-auto py-8 px-4 min-h-screen">
+      <div className="bg-gradient-to-b from-[#0b0014] via-[#1a0033] to-[#0b0014]">
+        <main className="max-w-6xl mx-auto py-8 px-4 pb-20">
       {/* Header */}
       <div className="mb-8">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4">
@@ -45,8 +47,8 @@ export default async function InvestmentPage() {
             <p className="text-gray-400 text-sm">Acompanhe e gerencie sua carteira de investimentos</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-            {categories.length === 0 && <CreateDefaultCategoriesButton />}
-            <CreateCategoryDialog />
+            {categories.length === 0 && <CreateDefaultCategoriesButton userCanCreateCategory={userCanCreateCategory} />}
+            <CreateCategoryDialog userCanCreateCategory={userCanCreateCategory} />
           </div>
         </div>
       </div>

@@ -537,6 +537,12 @@ import {
   Trash2,
   Edit3
 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 const SUGGESTED_CATEGORIES: { [key: string]: typeof TransactionCategory[keyof typeof TransactionCategory] } = {
   posto: TransactionCategory.TRANSPORTATION,
@@ -567,6 +573,7 @@ interface UpsertTransactionDialogProps {
   defaultValues?: FormSchema;
   transactionId?: string;
   setIsOpen: (isOpen: boolean) => void;
+  userIsPremium?: boolean;
 }
 
 const formSchema = z.object({
@@ -619,6 +626,7 @@ const UpsertTransactionDialog = ({
   defaultValues,
   transactionId,
   setIsOpen,
+  userIsPremium = false,
 }: UpsertTransactionDialogProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -821,21 +829,36 @@ const UpsertTransactionDialog = ({
           </div>
         </DialogHeader>
 
-        <div className="overflow-y-auto max-h-[calc(90vh-200px)] py-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="overflow-y-auto max-h-[calc(90vh-200px)] py-6 px-[10px] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {/* Manual Form */}
           {step === 'form' && (
             <div className="space-y-6">
               {!isUpdate && (
-                <div className="flex justify-center">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setStep('import')}
-                    className="flex items-center space-x-2 border-dashed border-2 hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20"
-                  >
-                    <Download className="h-4 w-4" />
-                    <span>Importar via OFX</span>
-                  </Button>
+                <div className="flex flex-col items-center gap-2">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => setStep('import')}
+                          disabled={!userIsPremium}
+                          className="flex items-center space-x-2 border-dashed border-2 hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <Download className="h-4 w-4" />
+                          <span>Importar via OFX</span>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {!userIsPremium && "Recurso exclusivo para usuários Premium"}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                  {!userIsPremium && (
+                    <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                      💎 Recurso exclusivo Premium
+                    </p>
+                  )}
                 </div>
               )}
 

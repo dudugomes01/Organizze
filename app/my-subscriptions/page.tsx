@@ -8,6 +8,7 @@ import SubscriptionsList from "./_components/subscriptions-list";
 import { getRecurringSubscriptions } from "./_actions/manage-subscription/index";
 import SejaPremiumMobile from "../_components/seja-premium-mobile";
 import { CreditCardIcon, TrendingUpIcon, CalendarIcon, DollarSignIcon } from "lucide-react";
+import { canUserCreateSubscription } from "../_data/can-user-create-subscription";
 
 export default async function MySubscriptionsPage() {
   const { userId } = await auth();
@@ -15,7 +16,10 @@ export default async function MySubscriptionsPage() {
     redirect("/login");
   }
 
-  const subscriptions = await getRecurringSubscriptions();
+  const [subscriptions, userCanCreateSubscription] = await Promise.all([
+    getRecurringSubscriptions(),
+    canUserCreateSubscription(),
+  ]);
 
   const totalMonthly = subscriptions
     .filter(sub => sub.isActive)
@@ -41,7 +45,7 @@ export default async function MySubscriptionsPage() {
                 <p className="text-gray-400 text-sm">Gerencie suas assinaturas recorrentes</p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-                <CreateSubscriptionDialog />
+                <CreateSubscriptionDialog userCanCreateSubscription={userCanCreateSubscription} />
               </div>
             </div>
           </div>
@@ -111,11 +115,6 @@ export default async function MySubscriptionsPage() {
                 </p>
               </CardContent>
             </Card>
-          </div>
-
-          {/* Add New Subscription */}
-          <div className="flex justify-center mb-8">
-            <CreateSubscriptionDialog />
           </div>
 
           {/* Subscriptions List */}

@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/app/_lib/prisma";
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 const DEFAULT_CATEGORIES = [
   {
@@ -44,6 +44,14 @@ export async function createDefaultCategories() {
       return { success: true, message: "Usuário já possui categorias" };
     }
 
+    // Verificar se o usuário é premium (criar 4 categorias padrão requer ser premium)
+    const user = await clerkClient().users.getUser(userId);
+    const isPremium = user.publicMetadata.subscriptionPlan === "premium";
+    
+    if (!isPremium) {
+      throw new Error("Apenas usuários premium podem criar categorias padrão. Atualize seu plano para ter acesso.");
+    }
+
     // Criar categorias padrão
     await db.investmentCategory.createMany({
       data: DEFAULT_CATEGORIES.map(category => ({
@@ -55,6 +63,9 @@ export async function createDefaultCategories() {
     return { success: true, message: "Categorias padrão criadas com sucesso" };
   } catch (error) {
     console.error("Erro ao criar categorias padrão:", error);
+    if (error instanceof Error) {
+      throw error;
+    }
     throw new Error("Erro ao criar categorias padrão");
   }
 }

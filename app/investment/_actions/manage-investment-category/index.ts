@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/app/_lib/prisma";
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -25,6 +25,20 @@ export async function createInvestmentCategory(
   const validatedParams = createInvestmentCategorySchema.parse(params);
 
   try {
+    // Verificar se o usuário tem permissão para criar mais categorias
+    const user = await clerkClient().users.getUser(userId);
+    const isPremium = user.publicMetadata.subscriptionPlan === "premium";
+    
+    if (!isPremium) {
+      const categoriesCount = await db.investmentCategory.count({
+        where: { userId },
+      });
+      
+      if (categoriesCount >= 3) {
+        throw new Error("Você atingiu o limite de 3 categorias. Atualize seu plano para criar ilimitadas.");
+      }
+    }
+
     await db.investmentCategory.create({
       data: {
         ...validatedParams,
@@ -37,6 +51,9 @@ export async function createInvestmentCategory(
   } catch (error) {
     if (error instanceof Error && error.message.includes("Unique constraint")) {
       throw new Error("Já existe uma categoria com este nome");
+    }
+    if (error instanceof Error) {
+      throw error;
     }
     throw new Error("Erro ao criar categoria");
   }

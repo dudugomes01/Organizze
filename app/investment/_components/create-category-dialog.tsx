@@ -9,6 +9,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { PlusIcon } from "lucide-react";
 import { createInvestmentCategory } from "../_actions/manage-investment-category";
 import { toast } from "sonner";
+import Link from "next/link";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/app/_components/ui/tooltip";
 
 const INVESTMENT_TYPES = [
   { value: "FIXED_INCOME", label: "Renda Fixa (CDI, CDB, Tesouro)" },
@@ -24,7 +31,11 @@ const COLORS = [
   "#ef4444", "#8b5cf6", "#06b6d4", "#84cc16", "#f97316"
 ];
 
-export default function CreateCategoryDialog() {
+interface CreateCategoryDialogProps {
+  userCanCreateCategory: boolean;
+}
+
+export default function CreateCategoryDialog({ userCanCreateCategory }: CreateCategoryDialogProps) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -61,13 +72,27 @@ export default function CreateCategoryDialog() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-[#9600ff] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#9600ff] text-white font-semibold w-full sm:w-auto">
-          <PlusIcon className="w-4 h-4 mr-2" />
-          Nova Categoria
-        </Button>
-      </DialogTrigger>
+    <div className="flex flex-col items-center gap-2">
+      <Dialog open={open} onOpenChange={setOpen}>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DialogTrigger asChild>
+                <Button 
+                  className="bg-gradient-to-r from-[#9600ff] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#9600ff] text-white font-semibold w-full sm:w-auto"
+                  disabled={!userCanCreateCategory}
+                >
+                  <PlusIcon className="w-4 h-4 mr-2" />
+                  Nova Categoria
+                </Button>
+              </DialogTrigger>
+            </TooltipTrigger>
+            <TooltipContent>
+              {!userCanCreateCategory &&
+                "Você atingiu o limite de 3 categorias. Atualize seu plano para criar ilimitadas."}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       <DialogContent className="!mx-auto w-[calc(100vw-2rem)] max-w-sm sm:max-w-md bg-gray-900 border-gray-700 !left-1/2 !transform !-translate-x-1/2">
         <DialogHeader>
           <DialogTitle className="text-white">Criar Nova Categoria</DialogTitle>
@@ -151,5 +176,16 @@ export default function CreateCategoryDialog() {
         </form>
       </DialogContent>
     </Dialog>
+    {!userCanCreateCategory && (
+      <Link href="/subscription">
+        <Button
+          size="sm"
+          className="bg-gradient-to-r from-[#55B02E] to-emerald-600 hover:from-emerald-600 hover:to-[#55B02E] text-white font-semibold text-xs px-3 py-1.5 shadow-lg shadow-[#55B02E]/30 hover:shadow-[#55B02E]/50 transition-all"
+        >
+          Seja premium
+        </Button>
+      </Link>
+    )}
+    </div>
   );
 }

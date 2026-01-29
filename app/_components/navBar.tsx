@@ -22,65 +22,79 @@ const NavBar = () => {
 
   return (
     <>
-      {/* NavBar principal */}
-      <nav className="hidden lg:flex justify-between border-b border-solid px-8 py-4">
-        {/* ESQUERDA */}
-        <div className="flex items-center gap-10">
-          <Image src="/logo.svg" width={173} height={39} alt="Finance AI" />
-          {/* Menu de navegação - Somente no Desktop */}
-          <div className="hidden lg:flex gap-6">
-            {menuItems.map((item) => (
-              <Link
-                key={item.title}
-                href={item.url}
-                className={
-                  pathname === item.url
-                    ? "font-bold text-primary"
-                    : "text-muted-foreground"
-                }
-              >
-                {item.title}
-              </Link>
-            ))}
+      {/* NavBar principal - Desktop */}
+      <nav className="hidden lg:flex items-center justify-between px-6 xl:px-8 py-4 bg-gradient-to-br from-[#000a1b] via-[#0a0f1f] to-[#000a1b] border-b border-gray-800/50 backdrop-blur-xl sticky top-0 z-50">
+        {/* ESQUERDA - Logo e Menu */}
+        <div className="flex items-center gap-8 xl:gap-12">
+          {/* Logo */}
+          <Link href="/" className="flex-shrink-0 transition-transform hover:scale-105">
+            <Image 
+              src="/logo-name.png" 
+              width={230} 
+              height={46} 
+              alt="Atlas" 
+              className="h-[46px] w-auto"
+              priority
+            />
+          </Link>
+          
+          {/* Menu de navegação */}
+          <div className="hidden lg:flex items-center gap-1">
+            {menuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.url;
+              
+              return (
+                <Link
+                  key={item.title}
+                  href={item.url}
+                  className={`
+                    relative flex items-center gap-2 px-4 py-2 rounded-lg
+                    transition-all duration-300 ease-in-out
+                    ${isActive 
+                      ? "text-[#55B02E] bg-[#55B02E]/10" 
+                      : "text-gray-400 hover:text-white hover:bg-gray-800/30"
+                    }
+                    group
+                  `}
+                >
+                  {/* Indicador de página ativa */}
+                  {isActive && (
+                    <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#55B02E]/20 blur-sm" />
+                  )}
+                  
+                  {/* Ícone */}
+                  <Icon 
+                    className={`w-4 h-4 transition-colors ${
+                      isActive ? "text-[#55B02E]" : "text-gray-500 group-hover:text-[#55B02E]"
+                    }`} 
+                  />
+                  
+                  {/* Texto */}
+                  <span className={`relative text-sm font-medium transition-colors ${
+                    isActive ? "text-[#55B02E]" : "group-hover:text-white"
+                  }`}>
+                    {item.title}
+                  </span>
+                  
+                  {/* Linha inferior para página ativa */}
+                  {isActive && (
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-gradient-to-r from-[#55B02E] to-emerald-500 rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
           </div>
         </div>
 
-        {/* DIREITA */}
+        {/* DIREITA - UserButton */}
         <div className="flex items-center gap-4">
-          {/* Botão para abrir a Sidebar no Mobile */}
-          <button
-            aria-label="Open menu"
-            className={`block lg:hidden p-2 ${
-              isSidebarOpen ? "text-black" : "text-primary"
-            }`}
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 5.25h16.5m-16.5 6h16.5m-16.5 6h16.5"
-              />
-            </svg>
-          </button>
-
-          {/* UserButton - Nome escondido no mobile */}
-          <div className="flex items-center">
+          {/* UserButton com container estilizado */}
+          <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-gray-800/30 border border-gray-700/50 backdrop-blur-sm hover:bg-gray-800/50 transition-colors">
             <UserButton
               showName={false}
               afterSignOutUrl="/"
             />
-            {/* Mostra o nome apenas no desktop */}
-            {/* <span className="hidden lg:inline-block ml-2 font-medium">
-              Eduardo Gomes
-            </span> */}
           </div>
         </div>
       </nav>

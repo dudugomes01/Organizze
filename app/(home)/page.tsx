@@ -75,15 +75,15 @@ const Home = async ({ searchParams }: HomeProps) => {
              {...dashboard}
               userCanAddTransaction={userCanAddTransaction}
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-6">
-              <div className="mb-4 sm:mb-0">
-                <TransactionsPieChart {...dashboard} />
-              </div>
-              <div className="mb-4 sm:mb-0">
-                <ExpensesPerCategory
-                  expensesPerCategory={dashboard.totalExpensePerCategory}
-                />
-              </div>
+            {/* TransactionsPieChart - junto com SummaryCards no tablet */}
+            <div className="mb-4 sm:mb-0">
+              <TransactionsPieChart {...dashboard} />
+            </div>
+            {/* ExpensesPerCategory - separado embaixo no tablet */}
+            <div className="mb-4 sm:mb-0">
+              <ExpensesPerCategory
+                expensesPerCategory={dashboard.totalExpensePerCategory}
+              />
             </div>
           </div>
           <div className="flex flex-col gap-6">

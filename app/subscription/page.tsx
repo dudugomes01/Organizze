@@ -7,6 +7,7 @@ import { Badge } from "../_components/ui/badge";
 import NavBar from "../_components/navBar";
 import { getCurrentMonthTransactions } from "../_data/get-current-month-transactions";
 import MobileBottomNav from '../(home)/_components/MobileBottomNav';
+import { db } from "../_lib/prisma";
 
 const SubscriptionPage = async () => {
   const { userId } = await auth();
@@ -15,26 +16,34 @@ const SubscriptionPage = async () => {
   }
   const user = await clerkClient().users.getUser(userId);
   const currentMonthTransactions = await getCurrentMonthTransactions();
+  const investmentCategoriesCount = await db.investmentCategory.count({
+    where: { userId },
+  });
+  const subscriptionsCount = await db.recurringSubscription.count({
+    where: { userId },
+  });
   const hasPremiumPlan = user.publicMetadata.subscriptionPlan == "premium";
 
   const basicFeatures = [
     { icon: CheckIcon, text: `Até 10 transações/mês`, highlight: `(${currentMonthTransactions}/10)`, available: true },
-    { icon: XIcon, text: "Relatórios de IA", available: false },
-    { icon: XIcon, text: "Planejamento", available: false },
+    { icon: CheckIcon, text: `Até 3 categorias de investimento`, highlight: `(${investmentCategoriesCount}/3)`, available: true },
+    { icon: CheckIcon, text: `Até 3 assinaturas mensais`, highlight: `(${subscriptionsCount}/3)`, available: true },
     { icon: XIcon, text: "Importação OFX", available: false },
+    { icon: XIcon, text: "Planejamento", available: false },
   ];
 
   const premiumFeatures = [
     { icon: Infinity, text: "Transações ilimitadas", available: true },
-    { icon: Brain, text: "Relatórios de IA", available: true },
-    { icon: Zap, text: "Planejamento", available: true },
+    { icon: Infinity, text: "Categorias de investimento ilimitadas", available: true },
+    { icon: Infinity, text: "Assinaturas mensais", available: true },
     { icon: FileText, text: "Importação OFX", available: true },
+    { icon: Zap, text: "Planejamento - Em Breve!", available: true },
   ];
 
   return (
     <>
       <NavBar />
-      <div className="w-full min-h-screen bg-gradient-to-br from-[#000a1b] via-[#0a0f1f] to-[#000a1b] relative pb-32 sm:pb-8 overflow-x-hidden">
+      <div className="w-full bg-gradient-to-br from-[#000a1b] via-[#0a0f1f] to-[#000a1b] relative pb-32 sm:pb-8 overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {/* Background Effects */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Grid Pattern */}

@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { db } from "@/app/_lib/prisma";
 import { createSubscriptionSchema, updateSubscriptionSchema, CreateSubscriptionInput, UpdateSubscriptionInput } from "./schema";
 import { revalidatePath } from "next/cache";
@@ -14,6 +14,20 @@ export async function createRecurringSubscription(data: CreateSubscriptionInput)
   const validatedData = createSubscriptionSchema.parse(data);
 
   try {
+    // Verificar se o usuário tem permissão para criar mais assinaturas
+    const user = await clerkClient().users.getUser(userId);
+    const isPremium = user.publicMetadata.subscriptionPlan === "premium";
+    
+    if (!isPremium) {
+      const subscriptionsCount = await db.recurringSubscription.count({
+        where: { userId },
+      });
+      
+      if (subscriptionsCount >= 3) {
+        throw new Error("Você atingiu o limite de 3 assinaturas. Atualize seu plano para criar ilimitadas.");
+      }
+    }
+
     const subscription = await db.recurringSubscription.create({
       data: {
         name: validatedData.name,
@@ -30,6 +44,9 @@ export async function createRecurringSubscription(data: CreateSubscriptionInput)
   } catch (error) {
     if (error && typeof error === 'object' && 'code' in error && error.code === "P2002") {
       throw new Error("Já existe uma assinatura com este nome");
+    }
+    if (error instanceof Error) {
+      throw error;
     }
     throw new Error("Erro ao criar assinatura");
   }

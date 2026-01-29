@@ -12,12 +12,14 @@ import {
 
 interface AddTransactionButtonProps {
   userCanAddTransaction?: boolean;
+  userIsPremium?: boolean;
   dialogIsOpen: boolean; 
   setDialogIsOpen: React.Dispatch<React.SetStateAction<boolean>>; 
 }
 
 const AddTransactionButton = ({
   userCanAddTransaction,
+  userIsPremium,
   dialogIsOpen,
   setDialogIsOpen,
 }: AddTransactionButtonProps) => {
@@ -44,6 +46,7 @@ const AddTransactionButton = ({
       <UpsertTransactionDialog
         isOpen={dialogIsOpen}
         setIsOpen={setDialogIsOpen}
+        userIsPremium={userIsPremium}
       />
     </>
   );

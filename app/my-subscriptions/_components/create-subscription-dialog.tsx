@@ -10,6 +10,13 @@ import { PlusIcon } from "lucide-react";
 import { createRecurringSubscription } from "../_actions/manage-subscription";
 import { toast } from "sonner";
 import { TransactionPaymentMethod } from "@prisma/client";
+import Link from "next/link";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/app/_components/ui/tooltip";
 
 const PAYMENT_METHODS = [
   { value: "PIX", label: "PIX" },
@@ -19,9 +26,11 @@ const PAYMENT_METHODS = [
   { value: "BANK_SLIP", label: "Boleto" },
 ];
 
+interface CreateSubscriptionDialogProps {
+  userCanCreateSubscription: boolean;
+}
 
-
-export default function CreateSubscriptionDialog() {
+export default function CreateSubscriptionDialog({ userCanCreateSubscription }: CreateSubscriptionDialogProps) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -57,14 +66,28 @@ export default function CreateSubscriptionDialog() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-[#9600ff] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#9600ff] text-white font-semibold px-8 py-3 text-lg">
-          <PlusIcon className="w-5 h-5 mr-2" />
-          Nova Assinatura
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="!mx-auto w-[calc(100vw-2rem)] max-w-sm sm:max-w-md bg-gray-900 border-gray-700 !left-1/2 !transform !-translate-x-1/2">
+    <div className="flex flex-col items-center gap-2">
+      <Dialog open={open} onOpenChange={setOpen}>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DialogTrigger asChild>
+                <Button 
+                  className="bg-gradient-to-r from-[#9600ff] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#9600ff] text-white font-semibold w-full sm:w-auto"
+                  disabled={!userCanCreateSubscription}
+                >
+                  <PlusIcon className="w-5 h-5 mr-2" />
+                  Nova Assinatura
+                </Button>
+              </DialogTrigger>
+            </TooltipTrigger>
+            <TooltipContent>
+              {!userCanCreateSubscription &&
+                "Você atingiu o limite de 3 assinaturas. Atualize seu plano para criar ilimitadas."}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <DialogContent className="!mx-auto w-[calc(100vw-2rem)] max-w-sm sm:max-w-md bg-gray-900 border-gray-700 !left-1/2 !transform !-translate-x-1/2">
         <DialogHeader>
           <DialogTitle className="text-white">Adicionar Assinatura</DialogTitle>
         </DialogHeader>
@@ -133,5 +156,16 @@ export default function CreateSubscriptionDialog() {
         </form>
       </DialogContent>
     </Dialog>
+    {!userCanCreateSubscription && (
+      <Link href="/subscription">
+        <Button
+          size="sm"
+          className="bg-gradient-to-r from-[#55B02E] to-emerald-600 hover:from-emerald-600 hover:to-[#55B02E] text-white font-semibold text-xs px-3 py-1.5 shadow-lg shadow-[#55B02E]/30 hover:shadow-[#55B02E]/50 transition-all"
+        >
+          Seja premium
+        </Button>
+      </Link>
+    )}
+    </div>
   );
 }

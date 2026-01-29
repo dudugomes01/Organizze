@@ -80,7 +80,7 @@ export default function SubscriptionsList({ subscriptions }: SubscriptionsListPr
   return (
     <div className="grid gap-4">
       <h2 className="text-xl font-semibold text-white mb-4">
-        Suas Assinaturas ({subscriptions.length})
+        Suas Assinaturas
       </h2>
       
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
