@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader } from "../_components/ui/card";
 import { CheckIcon, XIcon, Sparkles, Zap, Infinity, Brain, FileText, Crown } from "lucide-react";
 import AcquirePlanButton from "./_components/acquire-plan-button";
-import ForcePremiumButton from "./_components/force-premium-button";
 import { Badge } from "../_components/ui/badge";
 import NavBar from "../_components/navBar";
 import { getCurrentMonthTransactions } from "../_data/get-current-month-transactions";
@@ -200,9 +199,8 @@ const SubscriptionPage = async () => {
                       );
                     })}
                     
-                    <div className="mt-auto pt-4 space-y-2">
+                    <div className="mt-auto pt-4">
                       <AcquirePlanButton />
-                      {!hasPremiumPlan && <ForcePremiumButton />}
                     </div>
                   </CardContent>
 
