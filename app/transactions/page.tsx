@@ -246,7 +246,7 @@ const TransactionsPage = async ({ searchParams }: Props) => {
               <ScrollArea className="h-full">
                 {/* Mobile View */}
                 <div className="sm:hidden">
-                  <SubscriptionsListMobile subscriptions={activeSubscriptions} />
+                  {/* <SubscriptionsListMobile subscriptions={activeSubscriptions} /> */}
                   <TransactionList transactions={parsedTransactions} />
                 </div>
 
