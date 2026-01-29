@@ -26,7 +26,7 @@ const AcquirePlanButton = () => {
         throw new Error("Stripe not found");
       }
       await stripe.redirectToCheckout({ sessionId });
-    } catch (error) {
+    } catch {
       toast.error("Erro ao processar pagamento");
     } finally {
       setLoading(false);
@@ -38,7 +38,7 @@ const AcquirePlanButton = () => {
     try {
       const { url } = await createStripePortalLink();
       window.location.href = url;
-    } catch (error) {
+    } catch {
       toast.error("Erro ao abrir portal de gerenciamento");
     } finally {
       setLoading(false);

@@ -24,7 +24,7 @@ export default function ForcePremiumButton() {
       } else {
         toast.error(data.error || "Erro ao atualizar plano");
       }
-    } catch (error) {
+    } catch {
       toast.error("Erro ao atualizar plano");
     } finally {
       setLoading(false);
