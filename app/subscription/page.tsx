@@ -175,7 +175,7 @@ const SubscriptionPage = async () => {
                       <div className="flex items-end justify-center gap-1.5">
                         <span className="text-xl sm:text-2xl text-[#55B02E] font-bold">R$</span>
                         <span className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-[0_2px_20px_#55B02Eaa]">
-                          19
+                          17,90
                         </span>
                         <span className="text-base sm:text-lg text-gray-400 mb-0.5">/mês</span>
                       </div>
