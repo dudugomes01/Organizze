@@ -6,7 +6,7 @@ import AcquirePlanButton from "./_components/acquire-plan-button";
 import { Badge } from "../_components/ui/badge";
 import NavBar from "../_components/navBar";
 import { getCurrentMonthTransactions } from "../_data/get-current-month-transactions";
-import MobileBottomNav from '../(home)/_components/MobileBottomNav';
+import MobileHamburgerMenu from '../(home)/_components/MobileHamburgerMenu';
 import { db } from "../_lib/prisma";
 import Stripe from "stripe";
 
@@ -95,7 +95,7 @@ const SubscriptionPage = async () => {
   return (
     <>
       <NavBar />
-      <div className="w-full bg-gradient-to-br from-[#000a1b] via-[#0a0f1f] to-[#000a1b] relative pb-32 sm:pb-8 overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="w-full bg-gradient-to-br from-[#000a1b] via-[#0a0f1f] to-[#000a1b] relative sm:pb-8 overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {/* Background Effects */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Grid Pattern */}
@@ -295,7 +295,8 @@ const SubscriptionPage = async () => {
           </div>
         </div>
       </div>
-      <MobileBottomNav />
+      {/* <MobileBottomNav /> */}
+      <MobileHamburgerMenu />
     </>
   );
 };

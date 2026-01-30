@@ -1,7 +1,7 @@
 import { getDashboard } from "@/app/_data/get-dashboard";
 import { PiggyBankIcon, TrendingUpIcon, CalendarIcon, DollarSignIcon, SettingsIcon } from "lucide-react";
 import Navbar from "../_components/navBar";
-import MobileBottomNav from '../(home)/_components/MobileBottomNav';
+import MobileHamburgerMenu from '../(home)/_components/MobileHamburgerMenu';
 import CreateCategoryDialog from './_components/create-category-dialog';
 import CreateDefaultCategoriesButton from './_components/create-default-categories-button';
 import AllocationManager from './_components/allocation-manager';
@@ -12,20 +12,27 @@ import { getAllocationsWithCategories } from './_actions/manage-allocation';
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/_components/ui/card";
 import SejaPremiumMobile from "../_components/seja-premium-mobile";
 import { canUserCreateInvestmentCategory } from "@/app/_data/can-user-create-investment-category";
+import { auth, clerkClient } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 export default async function InvestmentPage() {
+  const { userId } = await auth();
+  if (!userId) {
+    redirect("/login");
+  }
+
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const year = String(now.getFullYear());
 
-  const [dashboard, categories, allocationsData, userCanCreateCategory] = await Promise.all([
+  const [dashboard, categories, allocationsData, userCanCreateCategory, user] = await Promise.all([
     getDashboard(month, year),
     getInvestmentCategories(),
     getAllocationsWithCategories(),
-    canUserCreateInvestmentCategory(),
-  ]);
+    canUserCreateInvestmentCategory(),    clerkClient().users.getUser(userId),  ]);
 
   const { allocations, totalAmount: totalAllocated } = allocationsData;
+  const userIsPremium = user.publicMetadata.subscriptionPlan === "premium";
 
   return (
     <>
@@ -199,10 +206,11 @@ export default async function InvestmentPage() {
         </p>
       </div>
 
-      <SejaPremiumMobile className="px-4 py-6 mb-20" />
+      {!userIsPremium && <SejaPremiumMobile className="px-4 py-6" />}
         </main>
       </div>
-      <MobileBottomNav />
+      {/* <MobileBottomNav /> */}
+      <MobileHamburgerMenu />
     </>
   );
 }

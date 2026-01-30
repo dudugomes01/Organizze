@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 import { ScrollArea } from "../_components/ui/scroll-area";
 import { canUserAddTransaction } from "../_data/can-user-add-transaction";
 import TransactionList from "./_columns/indexMobile";
-import MobileBottomNav from '../(home)/_components/MobileBottomNav';
+import MobileHamburgerMenu from '../(home)/_components/MobileHamburgerMenu';
 import { format, startOfMonth, endOfMonth } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import MonthSelector from "./MonthSelector";
@@ -320,10 +320,11 @@ const TransactionsPage = async ({ searchParams }: Props) => {
           </Card>
         )} */}
         
-        <SejaPremiumMobile className="px-4 py-6 mb-20" />
+        {!userIsPremium && <SejaPremiumMobile className="px-4 py-6" />}
       </div>
 
-      <MobileBottomNav />
+      {/* <MobileBottomNav /> */}
+      <MobileHamburgerMenu />
     </>
   );
 };

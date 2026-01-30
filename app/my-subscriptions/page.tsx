@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import NavBar from "../_components/navBar";
-import MobileBottomNav from "../(home)/_components/MobileBottomNav";
+import MobileHamburgerMenu from "../(home)/_components/MobileHamburgerMenu";
 import { Card, CardContent, CardHeader } from "../_components/ui/card";
 import CreateSubscriptionDialog from "./_components/create-subscription-dialog";
 import SubscriptionsList from "./_components/subscriptions-list";
@@ -16,9 +16,10 @@ export default async function MySubscriptionsPage() {
     redirect("/login");
   }
 
-  const [subscriptions, userCanCreateSubscription] = await Promise.all([
+  const [subscriptions, userCanCreateSubscription, user] = await Promise.all([
     getRecurringSubscriptions(),
     canUserCreateSubscription(),
+    (await import("@clerk/nextjs/server")).clerkClient().users.getUser(userId),
   ]);
 
   const totalMonthly = subscriptions
@@ -26,6 +27,7 @@ export default async function MySubscriptionsPage() {
     .reduce((sum, sub) => sum + Number(sub.amount), 0);
 
   const activeSubscriptions = subscriptions.filter(sub => sub.isActive).length;
+  const userIsPremium = user.publicMetadata.subscriptionPlan === "premium";
 
   return (
     <>
@@ -129,10 +131,11 @@ export default async function MySubscriptionsPage() {
             </p>
           </div>
 
-          <SejaPremiumMobile className="px-4 py-6 mb-20" />
+          {!userIsPremium && <SejaPremiumMobile className="px-4 py-6" />}
         </main>
       </div>
-      <MobileBottomNav />
+      {/* <MobileBottomNav /> */}
+      <MobileHamburgerMenu />
     </>
   );
 }

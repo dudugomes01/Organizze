@@ -10,7 +10,7 @@ import ExpensesPerCategory from "./_components/expenses-per-category";
 import LastTransactions from "./_components/last-transactions";
 import { canUserAddTransaction } from "../_data/can-user-add-transaction";
 import AiReportButton from "./_components/ai-report-button";
-import MobileBottomNav from './_components/MobileBottomNav';
+import MobileHamburgerMenu from './_components/MobileHamburgerMenu';
 import ActiveSubscriptions from "./_components/active-subscriptions";
 import { getRecurringSubscriptions } from "../my-subscriptions/_actions/manage-subscription";
 
@@ -95,7 +95,9 @@ const Home = async ({ searchParams }: HomeProps) => {
         
         {/* <SejaPremiumMobile className="px-4 pb-6 -mt-6 mb-[70px]" /> */}
       </div>
-      <MobileBottomNav />
+      {/* Teste: Comente MobileBottomNav e descomente MobileHamburgerMenu para comparar */}
+      {/* <MobileBottomNav /> */}
+      <MobileHamburgerMenu />
     </>
   );
 };
