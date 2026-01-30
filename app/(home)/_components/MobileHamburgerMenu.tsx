@@ -79,11 +79,12 @@ const MobileHamburgerMenu = () => {
 
   return (
     <>
-      <div className="fixed top-2 left-2 z-50 sm:hidden">
+      <div className="fixed top-2 right-2 z-50 sm:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <button
-              className="p-3.5 bg-gray-900/90 backdrop-blur-sm rounded-xl border border-gray-800 shadow-lg hover:bg-gray-800 transition-colors"
+              className="p-3.5 backdrop-blur-sm rounded-xl border border-gray-800 shadow-lg hover:bg-gray-800 transition-colors"
+              style={{ backgroundColor: 'rgb(21 43 90 / 90%)' }}
               aria-label="Abrir menu"
             >
               {isOpen ? (
