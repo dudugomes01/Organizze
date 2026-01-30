@@ -83,13 +83,13 @@ const MobileHamburgerMenu = () => {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <button
-              className="p-2.5 bg-gray-900/90 backdrop-blur-sm rounded-xl border border-gray-800 shadow-lg hover:bg-gray-800 transition-colors"
+              className="p-3.5 bg-gray-900/90 backdrop-blur-sm rounded-xl border border-gray-800 shadow-lg hover:bg-gray-800 transition-colors"
               aria-label="Abrir menu"
             >
               {isOpen ? (
-                <X className="w-5 h-5 text-white" />
+                <X className="w-6 h-6 text-white" />
               ) : (
-                <Menu className="w-5 h-5 text-white" />
+                <Menu className="w-6 h-6 text-white" />
               )}
             </button>
           </SheetTrigger>
