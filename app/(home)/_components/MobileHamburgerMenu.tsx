@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, Home, LineChart, PiggyBank, Repeat, Plus, Crown } from "lucide-react";
 import AddTransactionButton from "../../_components/add-transaction-button";
 import { Sheet, SheetContent, SheetTrigger } from "../../_components/ui/sheet";
+import Image from "next/image";
 
 const MobileHamburgerMenu = () => {
   const pathname = usePathname();
@@ -79,7 +80,7 @@ const MobileHamburgerMenu = () => {
 
   return (
     <>
-      <div className="fixed top-2 right-2 z-50 sm:hidden">
+      <div className="fixed top-2 right-2 z-50 lg:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <button
@@ -101,9 +102,14 @@ const MobileHamburgerMenu = () => {
           >
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="p-6 border-b border-gray-800/50">
-                <h2 className="text-xl font-bold text-white mb-1">Menu</h2>
-                <p className="text-sm text-gray-400">Navegação</p>
+              <div className="p-6 border-b border-gray-800/50 flex items-center justify-center">
+                <Image 
+                  src="/Logo-name.png" 
+                  alt="Atlas Hub" 
+                  width={150} 
+                  height={40}
+                  className="object-contain"
+                />
               </div>
 
               {/* Navigation Items */}
