@@ -26,7 +26,7 @@ export const createStripePortalLink = async () => {
       await stripe.customers.retrieve(customerId);
       console.log(`✅ Customer ${customerId} validado com sucesso`);
       return true;
-    } catch (error) {
+    } catch {
       console.log(`❌ Customer ${customerId} não encontrado no Stripe`);
       return false;
     }
