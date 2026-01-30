@@ -115,14 +115,28 @@ export const POST = async (request: Request) => {
       break;
     }
     case "customer.subscription.deleted": {
-      // Remover plano premium do usuário
+      // Assinatura expirada ou cancelada - remover plano premium do usuário
+      console.log("🔔 Webhook customer.subscription.deleted recebido");
+      console.log("📝 Subscription ID:", event.data.object.id);
+      
       const subscription = await stripe.subscriptions.retrieve(
         event.data.object.id,
       );
+      
+      console.log("📝 Subscription metadata:", subscription.metadata);
+      console.log("📝 Subscription status:", subscription.status);
+      console.log("📝 Ended at:", subscription.ended_at ? new Date(subscription.ended_at * 1000).toISOString() : 'null');
+      
       const clerkUserId = subscription.metadata.clerk_user_id;
+      
       if (!clerkUserId) {
-        return NextResponse.error();
+        console.error("❌ clerk_user_id não encontrado na subscription deletada");
+        return NextResponse.json({ error: "No clerk_user_id found" }, { status: 400 });
       }
+      
+      console.log("✅ clerk_user_id encontrado:", clerkUserId);
+      console.log("🔄 Removendo plano premium do usuário...");
+      
       await clerkClient().users.updateUser(clerkUserId, {
         privateMetadata: {
           stripeCustomerId: null,
@@ -132,6 +146,67 @@ export const POST = async (request: Request) => {
           subscriptionPlan: null,
         },
       });
+      
+      console.log("✅ Plano premium removido com sucesso!");
+      console.log("👤 Usuário agora está no plano básico");
+      break;
+    }
+    case "customer.subscription.updated": {
+      // Assinatura atualizada - verificar se foi cancelada
+      console.log("🔔 Webhook customer.subscription.updated recebido");
+      console.log("📝 Subscription ID:", event.data.object.id);
+      
+      const subscription = event.data.object as Stripe.Subscription;
+      
+      console.log("📝 Subscription status:", subscription.status);
+      console.log("📝 Cancel at period end:", subscription.cancel_at_period_end);
+      console.log("📝 Current period end:", new Date(subscription.current_period_end * 1000).toISOString());
+      
+      const clerkUserId = subscription.metadata.clerk_user_id;
+      
+      if (!clerkUserId) {
+        console.error("❌ clerk_user_id não encontrado na subscription");
+        break;
+      }
+      
+      console.log("✅ clerk_user_id encontrado:", clerkUserId);
+      
+      // Se a assinatura foi cancelada, atualizar metadata
+      if (subscription.cancel_at_period_end) {
+        console.log("⚠️ Assinatura marcada para cancelamento no final do período");
+        console.log("🔄 Atualizando metadata do usuário...");
+        
+        await clerkClient().users.updateUser(clerkUserId, {
+          privateMetadata: {
+            stripeCustomerId: subscription.customer as string,
+            stripeSubscriptionId: subscription.id,
+            subscriptionCancelAtPeriodEnd: true,
+            subscriptionCurrentPeriodEnd: subscription.current_period_end,
+          },
+          publicMetadata: {
+            subscriptionPlan: "premium", // Mantém premium até expirar
+          },
+        });
+        
+        console.log("✅ Metadata atualizado com informação de cancelamento!");
+      } else {
+        // Assinatura reativada ou atualizada normalmente
+        console.log("✅ Assinatura ativa ou reativada");
+        
+        await clerkClient().users.updateUser(clerkUserId, {
+          privateMetadata: {
+            stripeCustomerId: subscription.customer as string,
+            stripeSubscriptionId: subscription.id,
+            subscriptionCancelAtPeriodEnd: false,
+            subscriptionCurrentPeriodEnd: subscription.current_period_end,
+          },
+          publicMetadata: {
+            subscriptionPlan: "premium",
+          },
+        });
+        
+        console.log("✅ Metadata atualizado!");
+      }
       break;
     }
   }

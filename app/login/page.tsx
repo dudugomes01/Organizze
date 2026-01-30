@@ -72,13 +72,13 @@ const loginPage = async () => {
 
               {/* Headline */}
               <div className="space-y-4">
-                <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                <h1 className="relative z-10 lg:z-20 text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight pb-2">
                   Controle Financeiro
-                  <span className="relative z-10 block bg-gradient-to-r from-[#55B02E] to-emerald-400 bg-clip-text text-transparent">
+                  <span className="block bg-gradient-to-r from-[#55B02E] to-emerald-400 bg-clip-text text-transparent pb-[6px]">
                     Inteligente
                   </span>
                 </h1>
-                <p className="relative z-0 text-lg sm:text-xl text-gray-400 leading-relaxed max-w-xl">
+                <p className="text-lg sm:text-xl text-gray-400 leading-relaxed max-w-xl">
                   Gerencie suas finanças com inteligência artificial. 
                   Acompanhe gastos, organize investimentos e importe transações bancárias automaticamente.
                 </p>

@@ -8,6 +8,7 @@ import NavBar from "../_components/navBar";
 import { getCurrentMonthTransactions } from "../_data/get-current-month-transactions";
 import MobileBottomNav from '../(home)/_components/MobileBottomNav';
 import { db } from "../_lib/prisma";
+import Stripe from "stripe";
 
 const SubscriptionPage = async () => {
   const { userId } = await auth();
@@ -23,6 +24,57 @@ const SubscriptionPage = async () => {
     where: { userId },
   });
   const hasPremiumPlan = user.publicMetadata.subscriptionPlan == "premium";
+  
+  // Buscar informações da subscription do Clerk metadata (mais rápido)
+  let subscriptionCancelAtPeriodEnd = user.privateMetadata.subscriptionCancelAtPeriodEnd as boolean || false;
+  let subscriptionCurrentPeriodEnd: Date | null = null;
+  
+  const periodEndTimestamp = user.privateMetadata.subscriptionCurrentPeriodEnd as number | undefined;
+  if (periodEndTimestamp) {
+    subscriptionCurrentPeriodEnd = new Date(periodEndTimestamp * 1000);
+  }
+  
+  console.log("🔍 [Subscription Page] Dados do Clerk:");
+  console.log("   - hasPremiumPlan:", hasPremiumPlan);
+  console.log("   - subscriptionCancelAtPeriodEnd:", subscriptionCancelAtPeriodEnd);
+  console.log("   - subscriptionCurrentPeriodEnd:", subscriptionCurrentPeriodEnd);
+  
+  // Fallback: Se não tem no Clerk metadata, buscar do Stripe (mais lento)
+  if (hasPremiumPlan && !periodEndTimestamp && process.env.STRIPE_SECRET_KEY) {
+    const stripeSubscriptionId = user.privateMetadata.stripeSubscriptionId as string | undefined;
+    
+    console.log("⚠️ Dados não encontrados no Clerk, buscando do Stripe...");
+    console.log("📝 stripeSubscriptionId:", stripeSubscriptionId);
+    
+    if (stripeSubscriptionId) {
+      try {
+        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+          apiVersion: "2025-02-24.acacia",
+        });
+        const subscription = await stripe.subscriptions.retrieve(stripeSubscriptionId);
+        subscriptionCancelAtPeriodEnd = subscription.cancel_at_period_end;
+        subscriptionCurrentPeriodEnd = new Date(subscription.current_period_end * 1000);
+        
+        console.log("✅ Subscription encontrada no Stripe:");
+        console.log("   - Status:", subscription.status);
+        console.log("   - Cancel at period end:", subscriptionCancelAtPeriodEnd);
+        console.log("   - Current period end:", subscriptionCurrentPeriodEnd);
+        
+        // Atualizar Clerk metadata para próxima vez
+        await clerkClient().users.updateUser(userId, {
+          privateMetadata: {
+            ...user.privateMetadata,
+            subscriptionCancelAtPeriodEnd: subscription.cancel_at_period_end,
+            subscriptionCurrentPeriodEnd: subscription.current_period_end,
+          },
+        });
+      } catch (error) {
+        console.error("❌ Erro ao buscar subscription do Stripe:", error);
+      }
+    } else {
+      console.log("⚠️ stripeSubscriptionId não encontrado no Clerk metadata");
+    }
+  }
 
   const basicFeatures = [
     { icon: CheckIcon, text: `Até 10 transações/mês`, highlight: `(${currentMonthTransactions}/10)`, available: true },
@@ -202,7 +254,10 @@ const SubscriptionPage = async () => {
                     })}
                     
                     <div className="mt-auto pt-4">
-                      <AcquirePlanButton />
+                      <AcquirePlanButton 
+                        isCanceled={subscriptionCancelAtPeriodEnd}
+                        cancelAt={subscriptionCurrentPeriodEnd}
+                      />
                     </div>
                   </CardContent>
 

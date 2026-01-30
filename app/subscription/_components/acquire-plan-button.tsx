@@ -7,10 +7,21 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 import { toast } from "sonner";
+import { AlertCircle, Calendar } from "lucide-react";
 
-const AcquirePlanButton = () => {
+interface AcquirePlanButtonProps {
+  isCanceled?: boolean;
+  cancelAt?: Date | null;
+}
+
+const AcquirePlanButton = ({ isCanceled = false, cancelAt = null }: AcquirePlanButtonProps) => {
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
+
+  console.log("🔍 [AcquirePlanButton] Props recebidas:");
+  console.log("   - isCanceled:", isCanceled);
+  console.log("   - cancelAt:", cancelAt);
+  console.log("   - hasPremiumPlan:", user?.publicMetadata.subscriptionPlan === "premium");
 
   const handleAcquirePlanClick = async () => {
     setLoading(true);
@@ -47,6 +58,41 @@ const AcquirePlanButton = () => {
 
   const hasPremiumPlan = user?.publicMetadata.subscriptionPlan == "premium";
   
+  // Se for premium e a assinatura foi cancelada, mostrar mensagem de expiração
+  if (hasPremiumPlan && isCanceled && cancelAt) {
+    const daysRemaining = Math.ceil((cancelAt.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+    
+    return (
+      <div className="space-y-3">
+        <div className="w-full p-4 bg-yellow-500/10 border-2 border-yellow-500/30 rounded-xl">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+            <div className="flex-1 space-y-1">
+              <p className="text-yellow-500 font-semibold text-sm">
+                Assinatura Cancelada
+              </p>
+              <p className="text-gray-300 text-xs leading-relaxed">
+                Você ainda tem acesso premium por mais <strong className="text-white">{daysRemaining} {daysRemaining === 1 ? 'dia' : 'dias'}</strong>.
+              </p>
+              <div className="flex items-center gap-2 mt-2 text-xs text-gray-400">
+                <Calendar className="w-3 h-3" />
+                <span>Expira em {cancelAt.toLocaleDateString("pt-BR")}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Button
+          className="w-full h-12 bg-gradient-to-r from-[#55B02E] to-emerald-600 hover:from-emerald-600 hover:to-[#55B02E] text-white font-semibold text-base rounded-xl shadow-lg shadow-[#55B02E]/20 hover:shadow-[#55B02E]/40 transition-all duration-300 transform hover:scale-[1.02]"
+          onClick={handleAcquirePlanClick}
+          disabled={loading}
+        >
+          {loading ? "Processando..." : "Renovar Assinatura"}
+        </Button>
+      </div>
+    );
+  }
+  
+  // Se for premium e a assinatura está ativa, mostrar botão de gerenciamento
   if (hasPremiumPlan) {
     return (
       <Button 
@@ -60,6 +106,7 @@ const AcquirePlanButton = () => {
     );
   }
   
+  // Se não for premium, mostrar botão de aquisição
   return (
     <Button
       className="w-full h-12 bg-gradient-to-r from-[#55B02E] to-emerald-600 hover:from-emerald-600 hover:to-[#55B02E] text-white font-semibold text-base rounded-xl shadow-lg shadow-[#55B02E]/20 hover:shadow-[#55B02E]/40 transition-all duration-300 transform hover:scale-[1.02]"
