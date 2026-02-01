@@ -1,0 +1,20 @@
+{
+  "name": "Atlas",
+  "short_name": "Atlas",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000a1b",
+  "theme_color": "#000a1b",
+  "icons": [
+    {
+      "src": "/Atlas-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/Atlas-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

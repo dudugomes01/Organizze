@@ -16,8 +16,10 @@ export const metadata: Metadata = {
   title: "Atlas",
   description: "Sua plataforma de organização financeira",
   icons: {
-    icon: "/icon.svg",
+	icon: "/favicon.ico",
+	apple: "/Atlas-logo.png",
   },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({

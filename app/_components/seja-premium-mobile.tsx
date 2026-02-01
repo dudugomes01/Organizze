@@ -8,7 +8,7 @@ interface SejaPremiumMobileProps {
   className?: string;
 }
 
-export default function SejaPremiumMobile({ className = "px-4 py-6" }: SejaPremiumMobileProps) {
+export default function SejaPremiumMobile({ className = "px-4 py-6 mb-20" }: SejaPremiumMobileProps) {
   return (
     <div className={`sm:hidden w-full flex justify-center ${className}`}>
       <Link href="/subscription">
