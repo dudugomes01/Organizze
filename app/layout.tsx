@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: "Sua plataforma de organização financeira",
   icons: {
 	icon: "/favicon.ico",
-	apple: "/LogoAtlas-cel.jpg",
+	apple: "/LogoAtlas-cel.png",
   },
   manifest: "/site.webmanifest",
 };
