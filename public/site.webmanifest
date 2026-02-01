@@ -7,12 +7,12 @@
   "theme_color": "#000a1b",
   "icons": [
     {
-      "src": "/Atlas-logo.png",
+      "src": "/LogoAtlas-cel.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/Atlas-logo.png",
+      "src": "/LogoAtlas-cel.png",
       "sizes": "512x512",
       "type": "image/png"
     }
